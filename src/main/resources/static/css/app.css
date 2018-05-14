@@ -1,0 +1,28 @@
+.pp-sidebar-button {
+	width:285px;
+	text-align:left;
+	position:relative;
+}
+
+div.pp-account {
+	/* text-align:center; */
+}
+
+a{
+	text-decoration:none;
+	
+}
+
+a:hover {
+	background-color:teal;
+}
+
+span.relative-profile {
+	position:relative;
+	bottom:2px;
+}
+
+i.relative {
+	position:relative;
+	top:4px;
+}

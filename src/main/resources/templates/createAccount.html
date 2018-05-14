@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="text/html" charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="http://www.w3schools.com/lib/w3.css" />
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- 	<script type="text/javascript" src="createAccount.js"></script> -->
+	<title>Welcome! Share your traveling story with us!</title>
+</head>
+<body>
+
+	<form id="accountForm" action="/action_page.php">
+		User name:<br/>
+		<input type="text" name="username"/><br/>
+		Password:<br/>
+		<input type="password" name="password"/><br/>
+		First name:<br/>
+		<input type="text" name="firstname"/><br/>
+		Last name:<br/>
+		<input type="text" name="lastname"/><br/><br/>
+		<input type="button" onclick="createAccount()" value="Register" />
+	</form>
+	
+	<script>
+	function createAccount() {
+		var x = document.forms.namedItem("accountForm");
+		var username = x.elements[0].value;
+		var password = x.elements[1].value;
+		var firstname = x.elements[2].value;
+		var lastname = x.elements[3].value;
+		
+		console.log(username);
+		
+		$.ajax({
+			url: 'http://localhost:8181/addUser',
+			data : {username : username, password : password, firstname : firstname, lastname : lastname},
+			success : function(data) {
+				console.log(data);
+			}
+		})
+	}
+	</script>
+	
+
+</body>
+</html>
