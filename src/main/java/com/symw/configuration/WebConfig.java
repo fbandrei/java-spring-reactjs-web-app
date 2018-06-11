@@ -17,17 +17,17 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addViewController("/login").setViewName("/login");
 	}
 	
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler(
-				"/webjars/**",
-				"/img/**",
-				"/css/**",
-				"/js/**")
-		.addResourceLocations(
-				"classpath:/META-INF/resources/webjars",
-				"classpath:/static/img/",
-				"classpath:/static/css/",
-				"classpath:/static/js/");
-	}
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler(
+//				"/webjars/**",
+//				"/img/**",
+//				"/css/**",
+//				"/js/**")
+//		.addResourceLocations(
+//				"classpath:/META-INF/resources/webjars",
+//				"classpath:/static/img/",
+//				"classpath:/static/css/",
+//				"classpath:/static/js/");
+//	}
 }

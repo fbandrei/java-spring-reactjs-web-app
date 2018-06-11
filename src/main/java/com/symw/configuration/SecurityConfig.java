@@ -27,13 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 			.antMatchers("/", "/home", "/register", "/confirm", "/loginAndroid/{email}/{password}", 
 					"/checkIfEmailExists/{email}", "/saveAccountAndSendEmail", "/enableUser", "/deleteUnactivatedAccounts")
-			.permitAll().anyRequest().authenticated();
+			.permitAll();
 		
 		http.formLogin().permitAll();
-		http.formLogin().defaultSuccessUrl("http://localhost:8080/app");
+		http.formLogin().defaultSuccessUrl("http://localhost:3000/app");
 		
 		http.logout().permitAll();
-		http.logout().logoutSuccessUrl("http://localhost:8080/home");
+		http.logout().logoutSuccessUrl("http://localhost:3000/");
 		
 		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 		http.csrf().disable();

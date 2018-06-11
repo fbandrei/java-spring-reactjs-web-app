@@ -1,0 +1,11 @@
+
+Structuring rules:
+
+- A component can define nested components or services. It cannot use or define scenes.
+- A scene can define nested components, scenes or services.
+- A service can define nested services. It cannot use or define components or scenes.
+- Nested features can only use from its parent.
+
+https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
+
+Components defined at the root level of your project, in the components folder, are global and can be used anywhere in your application. But if you decide to define a new component inside another component (nesting), this new component can only be used its direct parent.

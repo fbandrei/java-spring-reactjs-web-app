@@ -62,8 +62,4 @@ public class UserController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/createAccount", method = RequestMethod.GET)
-	public String createAccount() {
-		return "createAccount";
-	}
 }
