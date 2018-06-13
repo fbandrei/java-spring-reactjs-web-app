@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from './Components/Sidebar/Sidebar.js'
-import HeaderApp from './Components/Main/HeaderApp/HeaderApp.js'
+import Sidebar from './sidebar/sidebar.js'
+import HeaderApp from './main/headerApp/headerApp.js'
 import './App.css'
 
 class App extends React.Component {

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button} from 'reactstrap';
-import './Sidebar.css'
-import {AccountList} from "../../../../Services/AccountService";
-import ModalAccount from "./ModalAccount";
+import './sidebar.css'
+import {AccountList} from "../../../services/accountService";
+import ModalAccount from "./modalAccount";
 
 
 class Sidebar extends React.Component {

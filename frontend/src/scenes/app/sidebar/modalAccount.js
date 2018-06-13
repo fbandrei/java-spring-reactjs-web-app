@@ -100,16 +100,4 @@ class ModalAccount extends React.Component {
 
 }
 
-function createAccount() {
-    const account = {
-        name: document.getElementById("name"),
-        sum: document.getElementById("sum")
-    }
-
-    axios.post('http://localhost:8080/createAccount', account)
-        .then(res => {
-
-        })
-}
-
 export default ModalAccount;
