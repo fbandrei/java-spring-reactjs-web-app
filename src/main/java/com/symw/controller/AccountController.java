@@ -29,7 +29,6 @@ public class AccountController {
     @ResponseBody
     public String createAccount(@RequestBody Account account) {
 
-        LOGGER.info("AccountName: " + account.getName());
         if (accountService.createAccount(account)) {
             return "OK";
         } else {

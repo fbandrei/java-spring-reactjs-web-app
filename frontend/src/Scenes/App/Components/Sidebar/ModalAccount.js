@@ -10,7 +10,6 @@ import {
     Label,
     Input,
     Col,
-    FormFeedback
 } from 'reactstrap';
 import axios from 'axios'
 
@@ -20,53 +19,23 @@ class ModalAccount extends React.Component {
         super();
 
         this.state = {
-            fields: {},
-            errors: {}
+            fields: {
+                name: '',
+                sum: ''
+            },
+            errors: {
+                name: ''
+            }
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleValidation() {
-        let fields = this.state.fields;
-        let errors = {};
-        let formIsValid = true;
-
-        if(!fields["name"]){
-            formIsValid = false;
-            errors["name"] = "Cannot be empty";
-        }
-
-        if(!fields["sum"]){
-            formIsValid = false;
-            errors["sum"] = "Cannot be empty";
-        }
-
-        if (formIsValid) {
-            const account = {
-                name: fields["name"],
-                sum: fields["sum"]
-            }
-            console.log(account);
-            axios.post('http://localhost:8080/createAccount', account)
-                .then(res => {
-                    let response = res.data;
-                    if (response === 'NOK') {
-                        console.log(response);
-                        formIsValid = false;
-                        errors["name"] = "This account already exists";
-                    }
-                })
-        }
-
-        this.setState({errors: errors});
-        return formIsValid;
-    }
-
     handleSubmit(event) {
         let fields = this.state.fields;
         let errors = {};
+        let formIsValid = true;
 
         const account = {
             name: fields["name"],
@@ -78,10 +47,15 @@ class ModalAccount extends React.Component {
                 if (response === 'NOK') {
                     errors["name"] = "This account already exists";
                     this.setState({errors: errors});
+                    formIsValid = false;
                 }
-            })
-
-        this.setState({errors: errors});
+            }).finally( () => {
+                if(formIsValid) {
+                    this.props.toggleModalAccount();
+                    this.props.reRender();
+                }
+            }
+        )
         event.preventDefault();
     }
 
@@ -111,7 +85,6 @@ class ModalAccount extends React.Component {
                             <Col sm={8}>
                                 <Input className={"form-control"} required value = {this.state.fields["sum"]}
                                        onChange={this.handleChange.bind(this, "sum")} type={"number"} step={"any"} name={"sum"} id={"sum"}/>
-                                <span style={{color: "red"}}>{this.state.errors["sum"]}</span>
                             </Col>
                         </FormGroup>
                         <ModalFooter>

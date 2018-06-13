@@ -1,16 +1,11 @@
 package com.symw.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nulabinc.zxcvbn.Strength;
+import com.nulabinc.zxcvbn.Zxcvbn;
+import com.symw.entity.User;
+import com.symw.service.EmailService;
+import com.symw.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,21 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nulabinc.zxcvbn.Strength;
-import com.nulabinc.zxcvbn.Zxcvbn;
-import com.symw.entity.User;
-import com.symw.service.EmailService;
-import com.symw.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Logger;
 
 @Controller
 public class RegisterController {
@@ -208,7 +197,6 @@ public class RegisterController {
 		
 		Optional<User> optionalUser = userSerivce.findByEmail(email);
 		if (optionalUser.isPresent()) {
-//			userSerivce.deleteUser(optionalUser.get());
 			User user = optionalUser.get();
 			user.setEnabled(true);
 			userSerivce.saveUser(user);

@@ -14,6 +14,9 @@ public class AccountService {
 	@Autowired
 	private AccountRepository accountRepository;
 
+	@Autowired
+	private UserService userService;
+
 	public Optional<Account> findByName(String name) {
 		
 		return accountRepository.findByName(name);
@@ -34,6 +37,7 @@ public class AccountService {
 			return false;
 		} else {
 			a.setDescription("");
+			a.setName(userService.getAuthenticatedUser());
 			accountRepository.save(a);
 			return true;
 		}

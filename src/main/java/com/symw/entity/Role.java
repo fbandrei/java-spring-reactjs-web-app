@@ -26,9 +26,6 @@ public class Role {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "description")
-	private String description;
-	
 	public Long getId() {
 		return this.id;
 	}

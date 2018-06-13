@@ -37,13 +37,3 @@ export class AccountList extends React.Component {
     }
 
 }
-
-function getAllAccounts() {
-    axios.get('http://localhost:8080/getAccounts')
-        .then(res => {
-            const accounts = res.data;
-            this.setState({
-                accounts: accounts
-            })
-        })
-}

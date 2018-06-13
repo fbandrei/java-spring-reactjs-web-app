@@ -28,6 +28,10 @@ class Sidebar extends React.Component {
         })
     }
 
+    reRender() {
+        this.forceUpdate();
+    }
+
     render() {
         return (
             <div className={"container sidebar"}>
@@ -48,7 +52,7 @@ class Sidebar extends React.Component {
                     <Button className={"sidebar-buttons"} href={"/transactions/all"}><i className={"fa fa-university"}></i> All accounts</Button>
                     <Button className={"sidebar-buttons"} onClick={this.toggleModalAccount.bind(this)}>
                             <i className={"fa fa-plus"}></i> Add account</Button>
-                    <ModalAccount toggleModalAccount={this.toggleModalAccount.bind(this)} modal={this.state.modalAccount}/>
+                    <ModalAccount reRender={this.reRender.bind(this)} toggleModalAccount={this.toggleModalAccount.bind(this)} modal={this.state.modalAccount}/>
                 </span>
                 <hr/>
                     <AccountList/>
