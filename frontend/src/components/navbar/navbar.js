@@ -9,15 +9,11 @@ import {
 
 class NavigationHeader extends React.Component {
 
-    constructor() {
-        super();
-        this.handleLogout = this.handleLogout.bind(this);
-    }
-
     render() {
         let navbar;
+        console.log(this.props.isAuthenticated);
         if (!this.props.isAuthenticated) {
-            navbar = [
+            navbar =
                 <Navbar color={"light"} light expand={"md"}>
                     <NavbarBrand href="/">SYMW</NavbarBrand>
                     <Nav className={"ml-auto"} navbar>
@@ -29,18 +25,17 @@ class NavigationHeader extends React.Component {
                         </NavItem>
                     </Nav>
                 </Navbar>
-            ]
+
         } else {
-            navbar = [
+            navbar =
                 <Navbar color={"light"} light expand={"md"}>
                     <NavbarBrand href="/">SYMW</NavbarBrand>
                     <Nav className={"ml-auto"} navbar>
                         <NavItem>
-                            <NavLink onClick={this.props.onLogout()}>Login</NavLink>
+                            <NavLink onClick={this.props.onLogout}>Logout</NavLink>
                         </NavItem>
                     </Nav>
                 </Navbar>
-            ]
         }
         return (
             <div>

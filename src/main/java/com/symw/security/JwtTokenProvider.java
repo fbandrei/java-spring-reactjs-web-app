@@ -43,6 +43,7 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String authToken) {
+        LOGGER.info("Authorization token: " + authToken);
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;

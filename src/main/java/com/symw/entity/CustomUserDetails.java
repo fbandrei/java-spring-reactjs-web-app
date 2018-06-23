@@ -19,10 +19,6 @@ public class CustomUserDetails extends User implements UserDetails{
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public CustomUserDetails(final Optional<User> user) {
-		super(user.get());
-	}
-
 	public CustomUserDetails(
 			Long id,
 			String firstName,

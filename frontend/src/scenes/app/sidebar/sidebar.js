@@ -35,8 +35,19 @@ class Sidebar extends React.Component {
     render() {
         return (
             <div className={"container sidebar"}>
+                <Button className={"sidebar-buttons"} href={"/app"}><i className={"fab fa-bitcoin"}/> Budget</Button>
+                <span>
+                    <Button className={"sidebar-buttons"} href={"/transactions/all"}><i className={"fas fa-money-check-alt"}/> Transactions</Button>
+                    <Button className={"sidebar-buttons"} href={"/analytics"}><i className="fas fa-chart-area"/> Analytics</Button>
+                    <Button className={"sidebar-buttons"} onClick={this.toggleModalAccount.bind(this)}>
+                            <i className={"fa fa-plus"}/> Add account</Button>
+                    <ModalAccount reRender={this.reRender.bind(this)} toggleModalAccount={this.toggleModalAccount.bind(this)} modal={this.state.modalAccount}/>
+                </span>
+                <hr/>
+                    <AccountList/>
+                <hr/>
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                    <DropdownToggle caret className={"sidebar-buttons"}><i className={"fa fa-address-card"}></i> Your
+                    <DropdownToggle caret className={"sidebar-buttons"}><i className={"fa fa-address-card"}/> Your
                         Profile</DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem href={"http://localhost:8080/logout"}>
@@ -47,16 +58,6 @@ class Sidebar extends React.Component {
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <Button className={"sidebar-buttons"} href={"/app"}><i className={"fa fa-bitcoin"}></i> Budget</Button>
-                <span>
-                    <Button className={"sidebar-buttons"} href={"/transactions/all"}><i className={"fa fa-university"}></i> All accounts</Button>
-                    <Button className={"sidebar-buttons"} onClick={this.toggleModalAccount.bind(this)}>
-                            <i className={"fa fa-plus"}></i> Add account</Button>
-                    <ModalAccount reRender={this.reRender.bind(this)} toggleModalAccount={this.toggleModalAccount.bind(this)} modal={this.state.modalAccount}/>
-                </span>
-                <hr/>
-                    <AccountList/>
-                <hr/>
             </div>
         );
     }

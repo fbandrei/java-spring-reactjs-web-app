@@ -37,7 +37,7 @@ public class AccountService {
 			return false;
 		} else {
 			a.setDescription("");
-			a.setName(userService.getAuthenticatedUser());
+//			a.setName(userService.getAuthenticatedUser());
 			accountRepository.save(a);
 			return true;
 		}

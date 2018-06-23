@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
+import com.symw.entity.CustomUserDetails;
 import com.symw.entity.Role;
 import com.symw.exception.AppException;
 import com.symw.repository.RoleRepository;
@@ -50,17 +51,14 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	public String getAuthenticatedUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return authentication.getName();
-	}
-
-	public User createUser(String firstName, String lastName, String email, String password) {
+	public User createUser(String firstName, String lastName, String email, String password, String confirmationToken) {
 		User user = new User();
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setEmail(email);
 		user.setPassword(passwordEncoder.encode(password));
+		user.setConfirmationToken(confirmationToken);
+		user.setEnabled(false);
 		Role userRole = roleRepository.findByName("ROLE_USER").
 				orElseThrow(() -> new AppException("User role not set."));
 		user.setRoles(Collections.singleton(userRole));

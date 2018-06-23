@@ -21,7 +21,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
                          AuthenticationException e) throws IOException, ServletException {
 
         LOGGER.severe("Unauthorized request: " + e.getMessage());
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You are not authorized to access this resource.");
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
     }
 
 }
