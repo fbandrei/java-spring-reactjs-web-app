@@ -10,7 +10,7 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="account_number")
-	private int accountNumber;
+	private Long accountNumber;
 	
 	@Column(name = "name")
 	private String name;
@@ -28,11 +28,11 @@ public class Account {
 	@OneToMany(mappedBy="transactionId", fetch = FetchType.EAGER)
 	private Set<Transaction> transactions;
 
-	public int getAccountNumber() {
+	public Long getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(int accountNumber) {
+	public void setAccountNumber(Long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 

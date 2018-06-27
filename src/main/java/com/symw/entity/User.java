@@ -1,20 +1,8 @@
 package com.symw.entity;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
@@ -48,14 +36,14 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
-	@OneToMany(mappedBy="accountNumber", fetch = FetchType.EAGER)
-	private Set<Account> accounts;
+	@OneToMany(mappedBy="accountNumber", cascade = CascadeType.ALL)
+	private Set<Account> accounts = new HashSet<>();
 	
 	@OneToMany(mappedBy="categoryId", fetch = FetchType.EAGER)
-	private Set<Category> categories;
+	private Set<Category> categories = new HashSet<>();
 	
 	@OneToMany(mappedBy="payeeId", fetch = FetchType.EAGER)
-	private Set<Payee> payees;
+	private Set<Payee> payees = new HashSet<>();
 	
 	public User() {}
 

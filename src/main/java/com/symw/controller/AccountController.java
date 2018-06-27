@@ -1,8 +1,10 @@
 package com.symw.controller;
 
 import com.symw.entity.Account;
+import com.symw.payloads.ApiResponse;
 import com.symw.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,23 +18,22 @@ public class AccountController {
 
     private static final Logger LOGGER = Logger.getLogger(AccountController.class.getName());
 
-    @RequestMapping(value = "/getAccounts", method = RequestMethod.GET)
-    @CrossOrigin
+    @RequestMapping(value = "/api/getAccounts", method = RequestMethod.GET)
     @ResponseBody
     public Iterable<Account> getAccounts() {
 
         return accountService.getAllAccounts();
     }
 
-    @RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/createAccount", method = RequestMethod.POST)
     @CrossOrigin
     @ResponseBody
-    public String createAccount(@RequestBody Account account) {
+    public ResponseEntity createAccount(@RequestBody Account account) {
 
         if (accountService.createAccount(account)) {
-            return "OK";
+            return ResponseEntity.ok(new ApiResponse(true, "Account created."));
         } else {
-            return "NOK";
+            return ResponseEntity.ok(new ApiResponse(false, "Account already exists."));
         }
     }
 }

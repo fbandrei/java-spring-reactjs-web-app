@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import {ListGroup, ListGroupItem} from 'reactstrap';
+import {getAccounts} from "./RequestAPI";
 
 export class AccountList extends React.Component {
     constructor() {
@@ -11,8 +11,8 @@ export class AccountList extends React.Component {
         }
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:8080/getAccounts')
+    componentWillMount() {
+        getAccounts()
             .then(res => {
                 const accounts = res.data;
                 console.log(accounts);

@@ -65,4 +65,10 @@ public class UserService {
 
 		return userRepository.save(user);
 	}
+
+	public User getAuthenticatedUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
+		return  (User)userDetails;
+	}
 }

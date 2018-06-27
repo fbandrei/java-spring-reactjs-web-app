@@ -53,7 +53,7 @@ class Sidebar extends React.Component {
                         <DropdownItem href={"http://localhost:8080/logout"}>
                             Logout
                         </DropdownItem>
-                        <DropdownItem href={"http://localhost:3000/editAccount"}>
+                        <DropdownItem href={"http://localhost:3000/editProfile"}>
                             Edit
                         </DropdownItem>
                     </DropdownMenu>

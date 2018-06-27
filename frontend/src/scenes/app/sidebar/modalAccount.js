@@ -1,17 +1,6 @@
 import React from 'react'
-import {
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    Col,
-} from 'reactstrap';
-import axios from 'axios'
+import {Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader,} from 'reactstrap';
+import {createAccount} from "../../../services/RequestAPI";
 
 class ModalAccount extends React.Component {
 
@@ -41,10 +30,9 @@ class ModalAccount extends React.Component {
             name: fields["name"],
             sum: fields["sum"]
         }
-        axios.post('http://localhost:8080/createAccount', account)
+        createAccount(account)
             .then(res => {
-                let response = res.data;
-                if (response === 'NOK') {
+                if (res.success === false) {
                     errors["name"] = "This account already exists";
                     this.setState({errors: errors});
                     formIsValid = false;

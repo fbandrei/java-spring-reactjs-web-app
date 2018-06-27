@@ -42,6 +42,21 @@ export function confirmRegistration(token) {
     });
 }
 
+export function getAccounts() {
+    return request({
+        url: API_BASE_URL + "/getAccounts",
+        method: 'GET'
+    })
+}
+
+export function createAccount(account) {
+    return request({
+        url: API_BASE_URL + "/createAccount",
+        method: 'POST',
+        body: JSON.stringify(account)
+    });
+}
+
 const request = (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json'

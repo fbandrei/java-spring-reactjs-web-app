@@ -1,5 +1,6 @@
 package com.symw.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class Payee {
 	private User user;
 	
 	@OneToMany(mappedBy="transactionId", fetch = FetchType.EAGER)
-	private Set<Transaction> transactions;
+	private Set<Transaction> transactions =new HashSet<>();
 
 	public int getPayeeId() {
 		return payeeId;

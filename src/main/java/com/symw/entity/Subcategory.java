@@ -1,5 +1,6 @@
 package com.symw.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ public class Subcategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="subcategory_id")
-	private int subcategoryId;
+	private Long subcategoryId;
 	
 	@Column(name = "name")
 	private String name;
@@ -27,17 +28,17 @@ public class Subcategory {
 	private double sum;
 	
 	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "user_id")
+	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
 	private Category category;
 	
 	@OneToMany(mappedBy="transactionId", fetch = FetchType.EAGER)
-	private Set<Transaction> transactions;
+	private Set<Transaction> transactions = new HashSet<>();
 
-	public int getSubcategoryId() {
+	public Long getSubcategoryId() {
 		return subcategoryId;
 	}
 
-	public void setSubcategoryId(int subcategoryId) {
+	public void setSubcategoryId(Long subcategoryId) {
 		this.subcategoryId = subcategoryId;
 	}
 
