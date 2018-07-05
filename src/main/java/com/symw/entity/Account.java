@@ -1,5 +1,7 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Set;
 
 import javax.persistence.*;
@@ -22,10 +24,12 @@ public class Account {
 	private double sum;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="transactionId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="account", fetch = FetchType.EAGER)
+	@Column
 	private Set<Transaction> transactions;
 
 	public Long getAccountNumber() {

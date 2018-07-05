@@ -1,5 +1,7 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +23,7 @@ public class Role {
 	private Long id;
 	
 	@ManyToMany(mappedBy = "roles")
+	@JsonIgnore
 	private Set<User> users = new HashSet<>();
 	
 	@Column(name = "name")

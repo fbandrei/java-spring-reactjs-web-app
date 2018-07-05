@@ -1,5 +1,7 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,13 +38,17 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
-	@OneToMany(mappedBy="accountNumber", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+	@Column
+	@JsonManagedReference
 	private Set<Account> accounts = new HashSet<>();
 	
-	@OneToMany(mappedBy="categoryId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+	@Column
 	private Set<Category> categories = new HashSet<>();
 	
-	@OneToMany(mappedBy="payeeId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+	@Column
 	private Set<Payee> payees = new HashSet<>();
 	
 	public User() {}

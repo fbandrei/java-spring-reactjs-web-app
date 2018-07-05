@@ -35,6 +35,7 @@ public class Category {
 	private User user;
 	
 	@OneToMany(mappedBy="subcategoryId", fetch = FetchType.EAGER)
+	@Column
 	private Set<Subcategory> subcategories = new HashSet<>();
 
 	public Long getCategoryId() {

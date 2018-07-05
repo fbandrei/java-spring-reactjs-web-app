@@ -32,6 +32,9 @@ class NavigationHeader extends React.Component {
                     <NavbarBrand href="/">SYMW</NavbarBrand>
                     <Nav className={"ml-auto"} navbar>
                         <NavItem>
+                            <NavLink href={"/app/budget"}>App</NavLink>
+                        </NavItem>
+                        <NavItem>
                             <NavLink onClick={this.props.onLogout}>Logout</NavLink>
                         </NavItem>
                     </Nav>

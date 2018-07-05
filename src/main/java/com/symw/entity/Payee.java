@@ -24,6 +24,7 @@ public class Payee {
 	private User user;
 	
 	@OneToMany(mappedBy="transactionId", fetch = FetchType.EAGER)
+	@Column
 	private Set<Transaction> transactions =new HashSet<>();
 
 	public int getPayeeId() {

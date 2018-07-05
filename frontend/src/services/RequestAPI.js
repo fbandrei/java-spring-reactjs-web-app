@@ -56,6 +56,13 @@ export function createAccount(account) {
         body: JSON.stringify(account)
     });
 }
+export function getBudgetData(year,month) {
+    return request({
+        url: API_BASE_URL + "/getBudgetData/?year=" + year + "?month=" + month,
+        method: 'GET'
+    })
+}
+
 
 const request = (options) => {
     const headers = new Headers({
@@ -73,7 +80,7 @@ const request = (options) => {
     return fetch(options.url, options)
         .then(response =>
             response.json().then(jsonResponse => {
-                console.log(jsonResponse);
+                console.log(jsonResponse, response.ok);
                 if (!response.ok) {
                     return Promise.reject(jsonResponse);
                 }

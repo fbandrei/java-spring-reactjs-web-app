@@ -37,7 +37,7 @@ public class AccountService {
 	public Iterable<Account> getAllAccounts() {
 		User user = userService.getAuthenticatedUser();
 		LOGGER.info("User: " + user.getId());
-		return accountRepository.findAllByUserId(user.getId());
+		return accountRepository.findAll();
 	}
 
 	public boolean createAccount(Account a) {

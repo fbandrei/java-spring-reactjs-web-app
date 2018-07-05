@@ -1,19 +1,26 @@
 .sidebar {
     background-color: #4056A1;
-    width: 260px;
+    width: 215px;
     margin-left: 0%;
     padding-left: 0px;
     padding-right: 0px;
     height: 100vh;
+    position: fixed;
+    z-index: 1;
 }
 
 .sidebar-buttons {
     border-radius: 0px;
-    width: 260px;
+    width: 220px;
     background-color: transparent;
     border: 0px;
     text-align: left;
     font-size: 20px;
+}
+
+.sidebar-buttons:hover {
+    background-color: transparent;
+    color: #D79922;
 }
 
 .sidebar-button-addAccount{
@@ -21,6 +28,27 @@
     background-color: white;
     color: cadetblue;
     border-color: cadetblue;
+}
+
+.infinite-container {
+    overflow: auto;
+    height: 139px;
+}
+
+.div-account-list {
+    position: absolute;
+    right:35px;
+    top:12px;
+}
+
+.div-buttons {
+    left: 100px;
+}
+
+.profile-button {
+    position: absolute;
+    top: 220px;
+
 }
 
 *:focus {

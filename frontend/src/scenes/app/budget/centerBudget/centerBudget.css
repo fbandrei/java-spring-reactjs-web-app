@@ -1,0 +1,22 @@
+.centerBudget {
+    background-color: #C5CBE3;
+    height: calc(100vh - 120px);
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.centerTable {
+    padding: 0px 0px;
+}
+
+.centerColumn {
+    background-color: #1890ff;
+}
+
+/*.ant-table-thead > tr:first-child > th:last-child {*/
+    /*border-top-right-radius: 0px;*/
+/*}*/
+
+/*.ant-table-thead > tr:first-child > th:first-child {*/
+    /*border-top-left-child: 0px;*/
+/*}*/

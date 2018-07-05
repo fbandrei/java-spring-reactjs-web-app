@@ -1,6 +1,6 @@
 import React from "react";
 import './start.css'
-import {notification} from 'antd';
+import {notification, Spin} from 'antd';
 import {getCurrentUser} from "./services/RequestAPI";
 import {ACCESS_TOKEN} from "./constants/constant";
 import LoadingIndicator from "./components/LoadingIndicator";
@@ -70,7 +70,7 @@ class Start extends React.Component {
 
     render() {
         if (this.state.isLoading) {
-            return <LoadingIndicator/>
+            return <Spin/>
         }
         return(
                 <Switch>
@@ -81,7 +81,9 @@ class Start extends React.Component {
                     <Route exact path="/login"
                            render={(props) => <Login onLogin={this.handleLogin} {...props} />}/>
                     <Route exact path={"/signup"} component={SignupForm}/>
-                    <Route exact path={"/app"} component={App}/>
+                    {/*<Route exact path={"/app/budget"} component={App}/>*/}
+                    <Route exact path={"/app/budget"}
+                            render={(props) => <App {...props}/>}/>
                     <Route path="/confirm"
                            render={(props) => <Confirm {...props} />}/>
                 </Switch>

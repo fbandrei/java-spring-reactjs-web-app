@@ -3,15 +3,7 @@ package com.symw.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Subcategory {
@@ -26,12 +18,15 @@ public class Subcategory {
 	
 	@Column(name = "sum")
 	private double sum;
-	
+
+	@OneToOne(mappedBy = "subcategory")
+	private Budget budget;
+
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
 	private Category category;
 	
-	@OneToMany(mappedBy="transactionId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="subcategory", fetch = FetchType.EAGER)
 	private Set<Transaction> transactions = new HashSet<>();
 
 	public Long getSubcategoryId() {
@@ -73,5 +68,12 @@ public class Subcategory {
 	public void setTransactions(Set<Transaction> transactions) {
 		this.transactions = transactions;
 	}
-	
+
+	public Budget getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Budget budget) {
+		this.budget = budget;
+	}
 }

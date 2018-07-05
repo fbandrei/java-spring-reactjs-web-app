@@ -19,6 +19,7 @@ public class AccountController {
     private static final Logger LOGGER = Logger.getLogger(AccountController.class.getName());
 
     @RequestMapping(value = "/api/getAccounts", method = RequestMethod.GET)
+    @CrossOrigin
     @ResponseBody
     public Iterable<Account> getAccounts() {
 

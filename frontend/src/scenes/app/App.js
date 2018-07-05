@@ -1,20 +1,21 @@
 import React from 'react';
 import Sidebar from './sidebar/sidebar.js'
-import HeaderApp from './main/headerApp/headerApp.js'
 import './App.css'
+import {Route, Switch} from "react-router-dom";
+import Budget from "./budget/budget";
 
 class App extends React.Component {
     render() {
         return (
             <div>
-                <div className={"container container-adjustment"}>
+                <div>
                     <div className={"row"}>
-                        <div className={"col-3"}>
+                        <div className={"col-2"}>
                             <Sidebar/>
                         </div>
-                        <div className={"col-9"}>
-                            <HeaderApp/>
-                        </div>
+                        <Switch>
+                            <Route exact path={"/app/budget"} render={(props) => <Budget {...props}/>}/>
+                        </Switch>
                     </div>
                 </div>
             </div>

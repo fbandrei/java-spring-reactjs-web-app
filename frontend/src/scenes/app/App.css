@@ -1,4 +1,4 @@
-.container-adjustment {
-    margin-left: 0%;
-    padding-left: 0%;
+html {
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
