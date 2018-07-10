@@ -58,7 +58,7 @@ export function createAccount(account) {
 }
 export function getBudgetData(year,month) {
     return request({
-        url: API_BASE_URL + "/getBudgetData/?year=" + year + "?month=" + month,
+        url: API_BASE_URL + "/budget/getBudgetData/?year=" + year + "&month=" + month,
         method: 'GET'
     })
 }

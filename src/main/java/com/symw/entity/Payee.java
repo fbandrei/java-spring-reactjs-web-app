@@ -19,11 +19,11 @@ public class Payee {
 	@Column(name = "description")
 	private String description;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="transactionId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="transactionId", fetch = FetchType.LAZY)
 	@Column
 	private Set<Transaction> transactions =new HashSet<>();
 

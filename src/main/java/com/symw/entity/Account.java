@@ -23,12 +23,12 @@ public class Account {
 	@Column(name = "sum")
 	private double sum;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="account", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="account")
 	@Column
 	private Set<Transaction> transactions;
 

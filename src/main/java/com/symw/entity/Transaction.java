@@ -1,5 +1,7 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,15 +21,15 @@ public class Transaction {
 	@Column(name = "sum_out")
 	private double sumOut;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_number", referencedColumnName = "account_number")
 	private Account account;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "payee_id", referencedColumnName = "payee_id")
 	private Payee payee;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subcategory_id", referencedColumnName = "subcategory_id")
 	private Subcategory subcategory;
 

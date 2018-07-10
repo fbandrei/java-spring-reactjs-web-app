@@ -1,11 +1,14 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
-import java.time.Year;
 
 @Entity
 @Table(name = "budget")
 public class Budget {
+
+    private static final Double ZERO = 0.0;
 
     @Id
     @GeneratedValue
@@ -13,17 +16,18 @@ public class Budget {
     private Long budgetId;
 
     @Column(name="year")
-    private Year year;
+    private short year;
 
     @Column(name="month")
-    private int month; // 1-January .. 12-December
+    private short month; // 1-January .. 12-December
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subcategory_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "subcategory_id", referencedColumnName = "subcategory_id")
     private Subcategory subcategory;
 
     @Column(name="budget")
-    private Double budget;
+    private Double budgeted;
 
     @Column(name="activity")
     private Double activity;
@@ -39,19 +43,19 @@ public class Budget {
         this.budgetId = budgetId;
     }
 
-    public Year getYear() {
+    public short getYear() {
         return year;
     }
 
-    public void setYear(Year year) {
+    public void setYear(short year) {
         this.year = year;
     }
 
-    public int getMonth() {
+    public short getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(short month) {
         this.month = month;
     }
 
@@ -64,11 +68,11 @@ public class Budget {
     }
 
     public Double getBudget() {
-        return budget;
+        return budgeted;
     }
 
     public void setBudget(Double budget) {
-        this.budget = budget;
+        this.budgeted = budget;
     }
 
     public Double getActivity() {

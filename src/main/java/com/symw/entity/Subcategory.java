@@ -1,9 +1,12 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Subcategory {
@@ -16,17 +19,16 @@ public class Subcategory {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "sum")
-	private double sum;
+	@OneToMany(mappedBy = "subcategory", fetch = FetchType.LAZY)
+	private Set<Budget> budgets = new HashSet<>();
 
-	@OneToOne(mappedBy = "subcategory")
-	private Budget budget;
-
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
+	@JsonBackReference
 	private Category category;
 	
-	@OneToMany(mappedBy="subcategory", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="subcategory", fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Set<Transaction> transactions = new HashSet<>();
 
 	public Long getSubcategoryId() {
@@ -45,14 +47,6 @@ public class Subcategory {
 		this.name = name;
 	}
 
-	public double getSum() {
-		return sum;
-	}
-
-	public void setSum(double sum) {
-		this.sum = sum;
-	}
-
 	public Category getCategory() {
 		return category;
 	}
@@ -69,11 +63,11 @@ public class Subcategory {
 		this.transactions = transactions;
 	}
 
-	public Budget getBudget() {
-		return budget;
+	public Set<Budget> getBudgets() {
+		return budgets;
 	}
 
-	public void setBudget(Budget budget) {
-		this.budget = budget;
+	public void setBudgets(Set<Budget> budgets) {
+		this.budgets = budgets;
 	}
 }

@@ -27,16 +27,21 @@ public class Category {
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "sum")
-	private double sum;
-	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="subcategoryId", fetch = FetchType.EAGER)
-	@Column
+	@OneToMany(mappedBy="category")
 	private Set<Subcategory> subcategories = new HashSet<>();
+
+	public Category(Long categoryId, String name) {
+		this.categoryId = categoryId;
+		this.name = name;
+		this.user = null;
+		this.description = null;
+	}
+
+	public Category() {}
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -60,14 +65,6 @@ public class Category {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public double getSum() {
-		return sum;
-	}
-
-	public void setSum(double sum) {
-		this.sum = sum;
 	}
 
 	public User getUser() {
