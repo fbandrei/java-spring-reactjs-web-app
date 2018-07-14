@@ -56,6 +56,25 @@ export function createAccount(account) {
         body: JSON.stringify(account)
     });
 }
+
+export function createCategory(category) {
+    return request({
+        url: API_BASE_URL + "/createCategory?category=" + category.name + "&subcategory1=" + category.subcategory_1
+        + "&subcategory2=" + category.subcategory_2 + "&subcategory3=" + category.subcategory_3
+        + "&year=" + category.year + "&month=" + category.month,
+        method: 'POST',
+        body: JSON.stringify(category)
+    });
+}
+
+export function createSubCategory(subcategory) {
+    return request({
+        url: API_BASE_URL + "/createSubcategory",
+        method: 'POST',
+        body: JSON.stringify(subcategory)
+    });
+}
+
 export function getBudgetData(year,month) {
     return request({
         url: API_BASE_URL + "/budget/getBudgetData/?year=" + year + "&month=" + month,
@@ -88,4 +107,4 @@ const request = (options) => {
             })
         );
 
-}
+};

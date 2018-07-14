@@ -2,14 +2,34 @@ import React from 'react';
 import './headerBudget.css'
 import {DatePicker, Button } from 'antd';
 import moment from 'moment';
+import {JOINING_MONTH, JOINING_YEAR} from "../../../../constants/constant";
 
 const {MonthPicker} = DatePicker;
 
-function onChange(date, dateString) {
-    console.log(date, dateString);
+function onChange(date) {
+    const currentTime = {
+        year: date.year(),
+        month: date.month()
+    };
+    this.props.setCurrentTime(currentTime);
+}
+
+function disabledDate(current) {
+
+    const joiningYear = localStorage.getItem(JOINING_YEAR);
+    const joiningMonth = localStorage.getItem(JOINING_MONTH);
+
+    const currentYear = current.get('year');
+    const currentMonth = current.get('month');
+
+    console.log(joiningYear, joiningMonth, currentYear, currentMonth);
+    return currentYear <= joiningYear && currentMonth < joiningMonth;
+
 }
 
 class HeaderBudget extends React.Component {
+
+
 
     render() {
         return(
@@ -19,8 +39,8 @@ class HeaderBudget extends React.Component {
                         <table className={"table-header"}>
                             <tr>
                                 <td>
-                                    <MonthPicker onChange={onChange} placeholder={"Select month"}
-                                                 defaultValue={moment()} size={"large"} style={{color: 'red'}}
+                                    <MonthPicker onChange={onChange.bind(this)} placeholder={"Select month"}
+                                                 defaultValue={moment()} disabledDate={disabledDate} size={"large"}
                                                  />
                                 </td>
                                 <td><Button size={"large"}>1025 RON</Button></td>

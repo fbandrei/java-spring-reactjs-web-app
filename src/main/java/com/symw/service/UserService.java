@@ -1,5 +1,6 @@
 package com.symw.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import com.symw.entity.CustomUserDetails;
 import com.symw.entity.Role;
 import com.symw.exception.AppException;
+import com.symw.payloads.SignUpRequest;
 import com.symw.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -51,17 +53,19 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	public User createUser(String firstName, String lastName, String email, String password, String confirmationToken) {
+	public User createUser(SignUpRequest request, String confirmationToken) {
 		User user = new User();
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setEmail(email);
-		user.setPassword(passwordEncoder.encode(password));
+		user.setFirstName(request.getFirstName());
+		user.setLastName(request.getLastName());
+		user.setEmail(request.getEmail());
+		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.setConfirmationToken(confirmationToken);
 		user.setEnabled(false);
 		Role userRole = roleRepository.findByName("ROLE_USER").
 				orElseThrow(() -> new AppException("User role not set."));
 		user.setRoles(Collections.singleton(userRole));
+		LocalDate date = LocalDate.of(request.getYear(), request.getMonth(), request.getDay());
+		user.setJoiningDate(date);
 
 		return userRepository.save(user);
 	}

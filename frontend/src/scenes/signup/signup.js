@@ -59,7 +59,10 @@ export class SignupForm extends React.Component {
             firstName: this.state.firstName.value,
             lastName: this.state.lastName.value,
             email: this.state.email.value,
-            password: this.state.password.value
+            password: this.state.password.value,
+            year: new Date().getFullYear(),
+            month: new Date().getMonth() + 1,
+            day: new Date().getDay()
         }
         signup(request)
           .then(response => {

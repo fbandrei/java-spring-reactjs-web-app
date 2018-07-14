@@ -19,16 +19,16 @@ public class Subcategory {
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(mappedBy = "subcategory", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "subcategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Budget> budgets = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
-	@JsonBackReference
+	@JsonBackReference(value = "categoryReference")
 	private Category category;
 	
 	@OneToMany(mappedBy="subcategory", fetch = FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value = "transactionsReference")
 	private Set<Transaction> transactions = new HashSet<>();
 
 	public Long getSubcategoryId() {

@@ -22,7 +22,7 @@ public class Budget {
     private short month; // 1-January .. 12-December
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value = "subcategoryReference")
     @JoinColumn(name = "subcategory_id", referencedColumnName = "subcategory_id")
     private Subcategory subcategory;
 

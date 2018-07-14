@@ -24,7 +24,7 @@ public class Account {
 	private double sum;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value = "accountReference")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	

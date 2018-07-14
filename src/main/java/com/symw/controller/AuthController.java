@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -70,8 +71,17 @@ public class AuthController {
         );
         LOGGER.info("Email received for login: " + loginRequest.getEmail());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        int year = 0, month = 0, day = 0;
+        if (oUser.isPresent()) {
+            User user = oUser.get();
+            LocalDate localDate = user.getJoiningDate();
+            year = localDate.getYear();
+            month = localDate.getMonthValue();
+            day = localDate.getDayOfMonth();
+        }
         String jwt = jwtTokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, year, month, day));
     }
 
     @PostMapping("/signup")
@@ -83,8 +93,7 @@ public class AuthController {
         }
 
         final String confirmationToken = UUID.randomUUID().toString();
-        User result = userService.createUser(signUpRequest.getFirstName(), signUpRequest.getLastName(),
-                signUpRequest.getEmail(), signUpRequest.getPassword(), confirmationToken);
+        User result = userService.createUser(signUpRequest, confirmationToken);
 
         String url = httpServletRequest.getScheme() + "://" + httpServletRequest.getServerName() + ":3000"
                 + "/confirm?token=" + confirmationToken;

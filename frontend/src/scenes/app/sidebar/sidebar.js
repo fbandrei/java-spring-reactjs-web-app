@@ -12,8 +12,11 @@ class Sidebar extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             dropdownOpen: false,
-            modalAccount: false
+            modalAccount: false,
+            forceUpdate: false,
         };
+
+        this.reRender = this.reRender.bind(this);
     }
 
     toggle() {
@@ -28,13 +31,15 @@ class Sidebar extends React.Component {
         })
     }
 
-    reRender() {
-        this.forceUpdate();
+    reRender(){
+        console.log(this);
+        this.render();
     }
 
     render() {
         return (
             <div className={"container sidebar"}>
+                <Button className={"sidebar-buttons"} href={"/"}><i className={"fas fa-home"}/> Home</Button>
                 <Button className={"sidebar-buttons"} href={"/app/budget"}><i className={"fab fa-bitcoin"}/> Budget</Button>
                 <span>
                     <Button className={"sidebar-buttons"} href={"/transactions/all"}><i className={"fas fa-money-check-alt"}/> Transactions</Button>

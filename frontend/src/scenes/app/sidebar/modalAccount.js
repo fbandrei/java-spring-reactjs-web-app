@@ -29,7 +29,7 @@ class ModalAccount extends React.Component {
         const account = {
             name: fields["name"],
             sum: fields["sum"]
-        }
+        };
         createAccount(account)
             .then(res => {
                 if (res.success === false) {
@@ -43,7 +43,7 @@ class ModalAccount extends React.Component {
                     this.props.reRender();
                 }
             }
-        )
+        );
         event.preventDefault();
     }
 

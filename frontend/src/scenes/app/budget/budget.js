@@ -6,13 +6,30 @@ import ActionsBudget from "./actionsBudget/actionsBudget";
 
 class Budget extends React.Component {
 
+    constructor() {
+        super();
+        const currentTime = new Date();
+        this.state = {
+            currentTime: {
+                year: currentTime.getFullYear(),
+                month: currentTime.getMonth()
+            }
+        }
+    }
+
+    setCurrentTime = (currentTime) => {
+        this.setState({
+            currentTime: currentTime
+        });
+    }
+
     render() {
 
         return(
                 <div className={"col-10"}>
                     <div className={"row"}>
                         <div className={"col-12"}>
-                            <HeaderBudget/>
+                            <HeaderBudget setCurrentTime={this.setCurrentTime}/>
                         </div>
                     </div>
                     <div className={"row"}>
@@ -22,7 +39,7 @@ class Budget extends React.Component {
                     </div>
                     <div className={"row"}>
                         <div className={"col-9"}>
-                            <CenterBudget/>
+                            <CenterBudget currentTime={this.state.currentTime}/>
                         </div>
                         <div className={"col-3"}>
                             <RightBarBudget/>

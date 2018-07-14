@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form, Icon, Input, notification} from 'antd'
 import {login} from "../../services/RequestAPI";
-import {ACCESS_TOKEN} from "../../constants/constant";
+import {ACCESS_TOKEN, JOINING_DATE, JOINING_DAY, JOINING_MONTH, JOINING_YEAR} from "../../constants/constant";
 import './login.css'
 import {Link} from "react-router-dom";
 
@@ -41,7 +41,15 @@ class LoginForm extends Component {
                                 description: response.message
                         }) ;
                         } else {
+                            const joiningDate = {
+                                year: response.year,
+                                month: response.month,
+                                day: response.day
+                            };
                             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+                            localStorage.setItem(JOINING_YEAR, response.year);
+                            localStorage.setItem(JOINING_MONTH, response.month);
+                            localStorage.setItem(JOINING_DAY, response.day);
                             this.props.onLogin();
                         }
 

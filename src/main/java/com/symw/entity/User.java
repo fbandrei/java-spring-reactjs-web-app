@@ -1,8 +1,7 @@
 package com.symw.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +31,9 @@ public class User {
 	
 	@Column(name = "enabled")
 	private boolean enabled;
+
+	@Column(name = "joining_date")
+	private LocalDate joiningDate;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), 
@@ -40,7 +42,6 @@ public class User {
 	
 	@OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Column
-	@JsonManagedReference
 	private Set<Account> accounts = new HashSet<>();
 	
 	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
@@ -62,6 +63,14 @@ public class User {
 		this.roles = user.getRoles();
 		this.id = user.getId();
 		this.confirmationToken = user.getConfirmationToken();
+	}
+
+	public LocalDate getJoiningDate() {
+		return joiningDate;
+	}
+
+	public void setJoiningDate(LocalDate joiningDate) {
+		this.joiningDate = joiningDate;
 	}
 
 	public Set<Role> getRoles() {
