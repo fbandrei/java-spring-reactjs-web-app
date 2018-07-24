@@ -3,6 +3,7 @@ import './actionsBudget.css'
 import {Button} from "antd";
 import ModalCategory from "./modalCategory";
 import Budget from "../budget";
+import ModalSubcategory from "./modalSubcategory";
 
 
 class ActionsBudget extends React.Component {
@@ -37,10 +38,12 @@ class ActionsBudget extends React.Component {
                     <div className={"actions-buttons"}>
                         <span>
                             <Button type="default" icon="plus-circle-o" onClick={this.toggleModalCategory.bind(this)}>Add category</Button>
-                            <Button type={"default"} icon={"plus-circle-o"} onClick={this.toggleModalSubcategory.bind(this)}>Add subcategory</Button>
+                            <Button className={"actions-buttons2"} type={"default"} icon={"plus-circle-o"} onClick={this.toggleModalSubcategory.bind(this)}>Add subcategory</Button>
                         </span>
                     </div>
                     <ModalCategory reRender={this.reRender.bind(this)} toggleModalCategory={this.toggleModalCategory.bind(this)} modal={this.state.modalCategory}/>
+                    <ModalSubcategory reRender={this.reRender.bind(this)} toggleModalSubcategory={this.toggleModalSubcategory.bind(this)} modal={this.state.modalSubcategory}/>
+
                 </div>
         );
     }

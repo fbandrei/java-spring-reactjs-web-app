@@ -4,10 +4,15 @@
 }
 
 .table-header {
-    width: 50%;
+    width: 30%;
 }
 
 .div-one-header {
     padding-top: 25px;
     padding-left: 30px;
+}
+
+.button-header {
+    height: 55px !important;
+    width: 100px !important;
 }

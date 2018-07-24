@@ -51,6 +51,9 @@ public class User {
 	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
 	@Column
 	private Set<Payee> payees = new HashSet<>();
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Global global;
 	
 	public User() {}
 
@@ -160,7 +163,12 @@ public class User {
 	public void setPayees(Set<Payee> payees) {
 		this.payees = payees;
 	}
-	
-	
-	
+
+	public Global getGlobal() {
+		return global;
+	}
+
+	public void setGlobal(Global global) {
+		this.global = global;
+	}
 }

@@ -25,6 +25,8 @@ export class AccountList extends React.Component {
             })
     }
 
+    doSomething() {}
+
     render() {
         if (this.state.isLoading) {
             return <LoadingIndicator/>
@@ -33,7 +35,7 @@ export class AccountList extends React.Component {
             <div className={"infinite-container"}>
                 <InfiniteScroll
                     initialLoad={false}
-                    loadMore={false}
+                    loadMore={this.doSomething}
                 >
                     <ListGroup>
                         {
@@ -47,9 +49,6 @@ export class AccountList extends React.Component {
                     </ListGroup>
                 </InfiniteScroll>
             </div>
-
-
-
         );
     }
 

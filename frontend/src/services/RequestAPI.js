@@ -56,6 +56,22 @@ export function createAccount(account) {
         body: JSON.stringify(account)
     });
 }
+export function updateBudget(subcategory) {
+    return request({
+        url: API_BASE_URL + "/updateBudget",
+        method: 'POST',
+        body: JSON.stringify(subcategory)
+    });
+}
+
+export function updateToBeBudget(toBeBudget) {
+    return request({
+        url: API_BASE_URL + "/updateToBeBudget?toBeBudget=" + toBeBudget,
+        method: 'POST',
+        body: JSON.stringify(toBeBudget)
+    });
+}
+
 
 export function createCategory(category) {
     return request({
@@ -69,7 +85,8 @@ export function createCategory(category) {
 
 export function createSubCategory(subcategory) {
     return request({
-        url: API_BASE_URL + "/createSubcategory",
+        url: API_BASE_URL + "/createSubcategory?selectedCategory=" + subcategory.selectedCategory + "&subcategory="
+        + subcategory.subcategory + "&year=" + subcategory.year + "&month=" + subcategory.month,
         method: 'POST',
         body: JSON.stringify(subcategory)
     });
@@ -78,6 +95,20 @@ export function createSubCategory(subcategory) {
 export function getBudgetData(year,month) {
     return request({
         url: API_BASE_URL + "/budget/getBudgetData/?year=" + year + "&month=" + month,
+        method: 'GET'
+    })
+}
+
+export function getAllCategories() {
+    return request({
+        url: API_BASE_URL + "/allCategories",
+        method: 'GET'
+    })
+}
+
+export function getToBeBudget() {
+    return request({
+        url: API_BASE_URL + "/toBeBudget",
         method: 'GET'
     })
 }
@@ -93,9 +124,7 @@ const request = (options) => {
         headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
     }
     const defaults = {headers: headers};
-    console.log("token: " + localStorage.getItem(ACCESS_TOKEN));
     options = Object.assign({}, defaults, options);
-    console.log(options);
     return fetch(options.url, options)
         .then(response =>
             response.json().then(jsonResponse => {

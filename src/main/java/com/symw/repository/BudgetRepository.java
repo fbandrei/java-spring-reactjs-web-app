@@ -14,6 +14,5 @@ public interface BudgetRepository extends CrudRepository<Budget, Long> {
 
     Optional<Budget> findByYearAndMonthAndSubcategory(short year, short month, Subcategory subcategory);
 
-    Set<Budget> findBySubcategory(Subcategory s);
-
-}
+    Iterable<Budget> findBySubcategory(Subcategory s);
+    }

@@ -13,7 +13,8 @@ class Budget extends React.Component {
             currentTime: {
                 year: currentTime.getFullYear(),
                 month: currentTime.getMonth()
-            }
+            },
+            toBeBudget: ''
         }
     }
 
@@ -21,15 +22,22 @@ class Budget extends React.Component {
         this.setState({
             currentTime: currentTime
         });
+    };
+
+    setToBeBudget(toBeBudget) {
+        this.setState({
+            toBeBudget: toBeBudget
+        });
+        console.log("here");
     }
 
     render() {
-
+            console.log("rendering");
         return(
                 <div className={"col-10"}>
                     <div className={"row"}>
                         <div className={"col-12"}>
-                            <HeaderBudget setCurrentTime={this.setCurrentTime}/>
+                            <HeaderBudget toBeBudget={this.state.toBeBudget} setToBeBudget={this.setToBeBudget.bind(this)} setCurrentTime={this.setCurrentTime}/>
                         </div>
                     </div>
                     <div className={"row"}>
@@ -38,11 +46,8 @@ class Budget extends React.Component {
                         </div>
                     </div>
                     <div className={"row"}>
-                        <div className={"col-9"}>
-                            <CenterBudget currentTime={this.state.currentTime}/>
-                        </div>
-                        <div className={"col-3"}>
-                            <RightBarBudget/>
+                        <div className={"col-12"}>
+                            <CenterBudget setToBeBudget={this.setToBeBudget.bind(this)} toBeBudget={this.state.toBeBudget} currentTime={this.state.currentTime}/>
                         </div>
                     </div>
                 </div>

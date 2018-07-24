@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import com.symw.entity.CustomUserDetails;
 import com.symw.entity.Role;
@@ -31,6 +32,8 @@ public class UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
+
 	
 	public Optional<User> findByEmail(String email) {
 		return userRepository.findByEmail(email);
@@ -64,6 +67,7 @@ public class UserService {
 		Role userRole = roleRepository.findByName("ROLE_USER").
 				orElseThrow(() -> new AppException("User role not set."));
 		user.setRoles(Collections.singleton(userRole));
+		LOGGER.info("Year: " + request.getYear() + " Month: " + request.getMonth() + " Day: " + request.getDay());
 		LocalDate date = LocalDate.of(request.getYear(), request.getMonth(), request.getDay());
 		user.setJoiningDate(date);
 

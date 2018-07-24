@@ -1,5 +1,7 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +22,7 @@ public class Category {
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference(value = "categoryReference")
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	

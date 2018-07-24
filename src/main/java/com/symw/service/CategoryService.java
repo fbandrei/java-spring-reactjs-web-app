@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 public class CategoryService {
+
+    private static final Logger LOGGER = Logger.getLogger(CategoryService.class.getName());
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -24,9 +27,17 @@ public class CategoryService {
     @Autowired
     private UserService userService;
 
+    public Iterable<Category> getAllCategories() {
+
+        LOGGER.info("Before getting all categories.");
+        Iterable<Category> categories = categoryRepository.findAll();
+        LOGGER.info("After getting all categories.");
+        return categories;
+    }
+
     public Boolean addCategory(String categoryName, String subcategory_1,
                             String subcategory_2, String subcategory_3,
-                            short year, short month) {
+                            int year, int month) {
 
         Boolean response = true;
 
@@ -38,16 +49,17 @@ public class CategoryService {
             category.setName(categoryName);
             category.setUser(userService.getAuthenticatedUser());
             User authenticatedUser = userService.getAuthenticatedUser();
-            category.setUser(userRepository.findById(authenticatedUser.getId()).get());
+            User user = userRepository.findById(authenticatedUser.getId()).get();
+            category.setUser(user);
             Set<Subcategory> subcategories = new HashSet<>();
             if (!subcategory_1.isEmpty()) {
-                subcategories.add(createSubcategoryAndBudgets(subcategory_1, authenticatedUser, category, year, month));
+                subcategories.add(createSubcategoryAndBudgets(subcategory_1, user, category, year, month));
             }
             if (!subcategory_2.isEmpty()) {
-                subcategories.add(createSubcategoryAndBudgets(subcategory_2, authenticatedUser, category, year, month));
+                subcategories.add(createSubcategoryAndBudgets(subcategory_2, user, category, year, month));
             }
             if (!subcategory_3.isEmpty()) {
-                subcategories.add(createSubcategoryAndBudgets(subcategory_3, authenticatedUser, category, year, month));
+                subcategories.add(createSubcategoryAndBudgets(subcategory_3, user, category, year, month));
             }
             category.setSubcategories(subcategories);
 
@@ -58,22 +70,66 @@ public class CategoryService {
     }
 
     private Subcategory createSubcategoryAndBudgets(String subcategoryName, User authenticatedUser,
-                                                    Category category, short year, short month) {
+                                                    Category category, int year, int month) {
 
         LocalDate joiningDate = authenticatedUser.getJoiningDate();
         Subcategory subcategory = new Subcategory();
         subcategory.setCategory(category);
         subcategory.setName(subcategoryName);
-        Set<Budget> budgets = new HashSet<>();
-        Budget budget = new Budget();
-        budget.setActivity(0.0);
-        budget.setAvailableAmount(0.0);
-        budget.setBudget(0.0);
-        budget.setYear(year);
-        budget.setMonth(month);
-        budget.setSubcategory(subcategory);
-        budgets.add(budget);
+        Set<Budget> budgets = createBudgets(joiningDate, year, month, subcategory);
         subcategory.setBudgets(budgets);
         return subcategory;
+    }
+
+    public Set<Budget> createBudgets(LocalDate joiningDate, int currentYear, int currentMonth, Subcategory subcategory) {
+
+        int joiningYear = joiningDate.getYear();
+        int joiningMonth = joiningDate.getMonthValue();
+
+        Set<Budget> budgets = new HashSet<>();
+        for(int i = joiningYear; i < currentYear; i++) {
+            for (int j = joiningMonth; j <= 12; j++) {
+                Budget budget = createEmptyBudget(subcategory, i, j);
+                budgets.add(budget);
+            }
+        }
+        if (joiningYear == currentYear) {
+            for (int i = joiningMonth; i < currentMonth; i++) {
+                Budget budget = createEmptyBudget(subcategory, joiningYear, i);
+                budgets.add(budget);
+            }
+        }
+
+        if (currentMonth == 1) {
+            for(int i = 1; i <= 12; i++) {
+                Budget budget = createEmptyBudget(subcategory, currentYear, i);
+                budgets.add(budget);
+            }
+        } else if (currentMonth > 1) {
+            for(int i = currentMonth; i <= 12; i++) {
+                Budget budget = createEmptyBudget(subcategory, currentYear, i);
+                budgets.add(budget);
+            }
+            currentYear += 1;
+            for(int i = 1; i < currentMonth; i++) {
+                Budget budget = createEmptyBudget(subcategory, currentYear, i);
+                budgets.add(budget);
+            }
+        }
+
+        return budgets;
+    }
+
+    public Budget createEmptyBudget(Subcategory subcategory, int year, int month) {
+
+        Budget budget = new Budget();
+        budget.setSubcategory(subcategory);
+        budget.setYear((short) year);
+        budget.setMonth((short) month);
+        budget.setActivity(0.0);
+        budget.setBudget(0.0);
+        budget.setAvailableAmount(0.0);
+
+        return budget;
     }
 }

@@ -1,14 +1,11 @@
 package com.symw.service;
 
-import com.symw.entity.Budget;
-import com.symw.entity.Category;
-import com.symw.entity.Subcategory;
-import com.symw.repository.BudgetRepository;
-import com.symw.repository.CategoryRepository;
-import com.symw.repository.SubcategoryRepository;
+import com.symw.entity.*;
+import com.symw.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -22,9 +19,16 @@ public class BudgetService {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
-    private SubcategoryRepository subcategoryRepository;
-    @Autowired
     private BudgetRepository budgetRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private GlobalRepository globalRepository;
 
     public Set<Category> getBudgetCategories(short year, short month) {
 
@@ -46,5 +50,31 @@ public class BudgetService {
         }
 
         return categories;
+    }
+
+    public void updateBudget(Subcategory subcategory) {
+
+        Iterable<Budget> budgets = budgetRepository.findBySubcategory(subcategory);
+        Budget budget = subcategory.getBudgets().stream().findFirst().get();
+        LOGGER.info(budget.getYear() + " < parameter > " + budget.getMonth() + "| " + budget.getAvailableAmount());
+        for(Budget b: budgets) {
+            if (b.getYear() == budget.getYear() && b.getMonth() == budget.getMonth()) {
+                b.setBudget(budget.getBudget());
+
+            }
+            b.setAvailableAmount(budget.getAvailableAmount());
+            LOGGER.info(b.getYear() + " " + b.getMonth());
+        }
+
+        budgetRepository.saveAll(budgets);
+
+    }
+
+    public void updateToBeBudget(double toBeBudget) {
+        User authenticatedUser = userService.getAuthenticatedUser();
+        User user = userRepository.findById(authenticatedUser.getId()).get();
+        Global global = globalRepository.findByUser(user).get();
+        global.setBudget(toBeBudget);
+        globalRepository.save(global);
     }
 }

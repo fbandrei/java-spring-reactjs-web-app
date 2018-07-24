@@ -1,7 +1,7 @@
 import React from 'react';
 import './centerBudget.css'
-import { Table, Badge, Menu, Dropdown, Icon} from 'antd';
-import {getBudgetData} from "../../../../services/RequestAPI";
+import {Button, InputNumber, Table} from 'antd';
+import {getBudgetData, updateBudget, updateSubcategory, updateToBeBudget} from "../../../../services/RequestAPI";
 import LoadingIndicator from "../../../../components/LoadingIndicator";
 
 class CenterBudget extends React.Component {
@@ -14,7 +14,9 @@ class CenterBudget extends React.Component {
             loading: false,
             budget: [],
             currentTime: props.currentTime,
-            modalCategory: false
+            modalCategory: false,
+            currentId: '',
+            currentInputValue: ''
         }
     }
 
@@ -32,8 +34,6 @@ class CenterBudget extends React.Component {
     // When component receive new props.
     componentWillReceiveProps(nextProps) {
         const time = nextProps.currentTime;
-        console.log(time);
-        console.log(this.state.currentTime);
         if (time.year !== this.state.currentTime.year ||
             time.month !== this.state.currentTime.month) {
             this.state.currentTime = time;
@@ -70,12 +70,11 @@ class CenterBudget extends React.Component {
                             }
                         }
 
-                        var b = {budgeted: budgeted, activity: activity, available: available};
+                        const b = {budgeted: budgeted, activity: activity, available: available};
                         budget.push(b);
                     }
                 }
 
-                console.log(budget);
                 this.setState({
                     budget: budget,
                     loading: false
@@ -83,6 +82,92 @@ class CenterBudget extends React.Component {
             })
     }
 
+    submitBudget() {
+        const input = document.getElementById(this.state.currentId);
+        const id = this.state.currentId;
+        const data = this.state.data;
+        if (input.value !== this.state.currentInputValue) {
+            console.log(id);
+            let subcategory = [];
+            if (id[2] === 's') {
+                if (id[4] !== undefined) {
+                    subcategory = data[id[1]].subcategories[id[3] + '' + id[4]];
+                    updateToBeBudget(this.props.toBeBudget - input.value)
+                        .then(
+                            this.props.setToBeBudget(this.props.toBeBudget - input.value + subcategory.budgets[0].budget)
+                        );
+                    subcategory.budgets[0].budget = input.value;
+                    subcategory.budgets[0].availableAmount = subcategory.budgets[0].availableAmount + subcategory.budgets[0].budget - subcategory.budgets[0].activity;
+                    data[id[1]].subcategories[id[3] + '' + id[4]].budgets[0] = subcategory.budgets[0];
+                    updateBudget(subcategory)
+                        .then(
+                            this.setState({
+                                data: data
+                            })
+                        );
+                } else {
+                    subcategory = data[id[1]].subcategories[id[3]];
+                    let budget = subcategory.budgets[0];
+                    updateToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
+                        .then(
+                            this.props.setToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
+                        );
+                    const actualBudget = budget.budget;
+                    budget.budget = input.value;
+                    budget.availableAmount = Number(budget.availableAmount) + Number(budget.budget) - Number(actualBudget) - Number(budget.activity);
+                    subcategory.budgets[0] = budget;
+                    updateBudget(subcategory)
+                        .then(
+                            this.setState({
+                                data: data
+                            })
+                        );
+                }
+            } else {
+                if (id[5] !== undefined) {
+                    subcategory = data[id[1] + '' + id[2]].subcategories[id[4] + '' + id[5]];
+                    let budget = subcategory.budgets[0];
+                    updateToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                        .then(
+                            this.props.setToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                        );
+                    budget.budget = input.value;
+                    budget.availableAmount = budget.availableAmount + budget.budget - budget.activity;
+                    subcategory.budgets[0] = budget;
+                    updateBudget(subcategory)
+                        .then(
+                            this.setState({
+                                data: data
+                            })
+                        );
+
+                } else {
+                    subcategory = data[id[1] + '' + id[2]].subcategories[id[4]];
+                    let budget = subcategory.budgets[0];
+                    updateToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                        .then(
+                            this.props.setToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                        );
+                    budget.budget = input.value;
+                    budget.availableAmount = budget.availableAmount + budget.budget - budget.activity;
+                    subcategory.budgets[0] = budget;
+                    updateBudget(subcategory)
+                        .then(
+                            this.setState({
+                                data: data
+                            })
+                        );
+                }
+            }
+        }
+    }
+
+    focusElement() {
+        this.setState({
+            currentId: document.activeElement.id,
+            currentInputValue: document.getElementById(document.activeElement.id).value
+        });
+    }
 
     render() {
         if (this.state.loading) {
@@ -112,10 +197,14 @@ class CenterBudget extends React.Component {
             if (category !== undefined && category. subcategories !== undefined) {
                 for(let i = 0; i < category.subcategories.length; i++) {
                     if (category.subcategories[i].budgets[zero] !== undefined) {
+                        const id = 'c' + (record.key - 1) + 's' + i;
+                        console.log(id);
                         const m = {key: i, category: category.subcategories[i].name,
-                            budget: category.subcategories[i].budgets[zero].budget,
+                            budget: <InputNumber defaultValue={category.subcategories[i].budgets[zero].budget}
+                                min={0} max={9999999} step={0.25} size={"small"} onBlur={this.submitBudget.bind(this)}
+                                                 onFocus={this.focusElement.bind(this)} id={id}/>,
                             activity: category.subcategories[i].budgets[zero].activity,
-                            available: category.subcategories[i].budgets[zero].availableAmount};
+                            available: <Button size={"small"}>{category.subcategories[i].budgets[zero].availableAmount}</Button>};
                         data.push(m);
                     }
                 }
@@ -130,7 +219,6 @@ class CenterBudget extends React.Component {
                 />
             );
         };
-        const s = ["1", "2"];
         return(
 
             <div>

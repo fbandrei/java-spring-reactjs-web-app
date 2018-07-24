@@ -105,7 +105,7 @@ class ModalCategory extends React.Component {
                         </FormGroup>
                         <ModalFooter>
                             <Input className={"btn btn-primary"} type={"submit"} value={"Submit"}/>
-                            <Button color={"secondary"} onClick={this.props.toggleModalAccount}>Cancel</Button>
+                            <Button color={"secondary"} onClick={this.props.toggleModalCategory}>Cancel</Button>
                         </ModalFooter>
                     </Form>
                 </ModalBody>

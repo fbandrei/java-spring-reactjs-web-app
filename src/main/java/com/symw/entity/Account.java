@@ -28,7 +28,7 @@ public class Account {
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="account")
+	@OneToMany(mappedBy="account", fetch = FetchType.LAZY)
 	@Column
 	private Set<Transaction> transactions;
 

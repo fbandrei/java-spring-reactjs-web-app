@@ -62,7 +62,7 @@ export class SignupForm extends React.Component {
             password: this.state.password.value,
             year: new Date().getFullYear(),
             month: new Date().getMonth() + 1,
-            day: new Date().getDay()
+            day: new Date().getUTCDate()
         }
         signup(request)
           .then(response => {
