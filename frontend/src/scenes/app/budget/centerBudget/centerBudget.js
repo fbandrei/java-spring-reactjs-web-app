@@ -1,7 +1,11 @@
 import React from 'react';
 import './centerBudget.css'
-import {Button, InputNumber, Table} from 'antd';
-import {getBudgetData, updateBudget, updateSubcategory, updateToBeBudget} from "../../../../services/RequestAPI";
+import {Button, InputNumber, Table, message, Icon} from 'antd';
+import Popover from '@material-ui/core/Popover';
+import {
+    deleteCategoryRequest, getBudgetData, updateBudget, updateSubcategory,
+    updateToBeBudget
+} from "../../../../services/RequestAPI";
 import LoadingIndicator from "../../../../components/LoadingIndicator";
 
 class CenterBudget extends React.Component {
@@ -16,7 +20,9 @@ class CenterBudget extends React.Component {
             currentTime: props.currentTime,
             modalCategory: false,
             currentId: '',
-            currentInputValue: ''
+            currentInputValue: '',
+            popoverDeleteCategory: false,
+            idForDeleteCategory: ''
         }
     }
 
@@ -38,6 +44,9 @@ class CenterBudget extends React.Component {
             time.month !== this.state.currentTime.month) {
             this.state.currentTime = time;
            this.fetchData();
+        }
+        if (nextProps.newCategory === true || nextProps.newSubcategory === true) {
+            this.fetchData();
         }
     }
 
@@ -92,13 +101,15 @@ class CenterBudget extends React.Component {
             if (id[2] === 's') {
                 if (id[4] !== undefined) {
                     subcategory = data[id[1]].subcategories[id[3] + '' + id[4]];
-                    updateToBeBudget(this.props.toBeBudget - input.value)
+                    let budget = subcategory.budgets[0];
+                    updateToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
                         .then(
-                            this.props.setToBeBudget(this.props.toBeBudget - input.value + subcategory.budgets[0].budget)
+                            this.props.setToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
                         );
-                    subcategory.budgets[0].budget = input.value;
-                    subcategory.budgets[0].availableAmount = subcategory.budgets[0].availableAmount + subcategory.budgets[0].budget - subcategory.budgets[0].activity;
-                    data[id[1]].subcategories[id[3] + '' + id[4]].budgets[0] = subcategory.budgets[0];
+                    const actualBudget = budget.budget;
+                    budget.budget = input.value;
+                    budget.availableAmount = Number(budget.availableAmount) + Number(budget.budget) - Number(actualBudget) - Number(budget.activity);
+                    subcategory.budgets[0] = budget;
                     updateBudget(subcategory)
                         .then(
                             this.setState({
@@ -125,14 +136,17 @@ class CenterBudget extends React.Component {
                 }
             } else {
                 if (id[5] !== undefined) {
+
+
                     subcategory = data[id[1] + '' + id[2]].subcategories[id[4] + '' + id[5]];
                     let budget = subcategory.budgets[0];
-                    updateToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                    updateToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
                         .then(
-                            this.props.setToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                            this.props.setToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
                         );
+                    const actualBudget = budget.budget;
                     budget.budget = input.value;
-                    budget.availableAmount = budget.availableAmount + budget.budget - budget.activity;
+                    budget.availableAmount = Number(budget.availableAmount) + Number(budget.budget) - Number(actualBudget) - Number(budget.activity);
                     subcategory.budgets[0] = budget;
                     updateBudget(subcategory)
                         .then(
@@ -144,12 +158,13 @@ class CenterBudget extends React.Component {
                 } else {
                     subcategory = data[id[1] + '' + id[2]].subcategories[id[4]];
                     let budget = subcategory.budgets[0];
-                    updateToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                    updateToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
                         .then(
-                            this.props.setToBeBudget(this.props.toBeBudget - input.value + budget.budget)
+                            this.props.setToBeBudget(Number(this.props.toBeBudget) - Number(input.value) + Number(budget.budget))
                         );
+                    const actualBudget = budget.budget;
                     budget.budget = input.value;
-                    budget.availableAmount = budget.availableAmount + budget.budget - budget.activity;
+                    budget.availableAmount = Number(budget.availableAmount) + Number(budget.budget) - Number(actualBudget) - Number(budget.activity);
                     subcategory.budgets[0] = budget;
                     updateBudget(subcategory)
                         .then(
@@ -169,6 +184,31 @@ class CenterBudget extends React.Component {
         });
     }
 
+    hideDeleteCategoryPopover = () => {
+        this.setState({
+            popoverDeleteCategory: false
+        });
+    };
+
+    deleteCategory() {
+        const categoryIndex = this.state.idForDeleteCategory;
+        const category = this.state.data[categoryIndex];
+        deleteCategoryRequest(category)
+            .then(res => {
+                this.setState({
+                    data: res
+                });
+                message.success("Category successfully deleted");
+            })
+    }
+
+    handleVisibleChange = (popoverDeleteCategory) => {
+        this.setState({ popoverDeleteCategory });
+        this.setState({
+            idForDeleteCategory: document.activeElement.id
+        })
+    };
+
     render() {
         if (this.state.loading) {
             return <LoadingIndicator/>
@@ -178,6 +218,8 @@ class CenterBudget extends React.Component {
             {title: 'Budget', dataIndex: 'budget', key: 'budget', width: 150},
             {title: 'Activity', dataIndex: 'activity', key: 'activity', width: 150},
             {title: 'Available', dataIndex: 'available', key: 'available', width: 150},
+            {title: 'Delete', dataIndex:'delete', key: 'delete', width: 60},
+            {title: 'Edit', dataIndex:'edit', key: 'edit', width: 150}
         ];
         const arrayData = this.state.data;
         const data = [];
@@ -185,7 +227,35 @@ class CenterBudget extends React.Component {
             for(let i = 0; i < arrayData.length; i++) {
                 const category = {key: i+1, category: arrayData[i].name,
                     budget: this.state.budget[i].budgeted, activity: this.state.budget[i].activity,
-                    available: this.state.budget[i].available};
+                    available: this.state.budget[i].available,
+                    delete: <div>
+                        <Button icon={"delete"} type={"danger"} onClick={this.handleVisibleChange} id={i + ''}/>
+                        <Popover id={'' + i}
+                            open={Boolean(this.state.popoverDeleteCategory)}
+                            onClose={this.hideDeleteCategoryPopover}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <div>
+                                <span className={"deleteCategoryPopover"}>
+                                    <Icon type={"exclamation-circle"}/>
+                                    <span> <b>Are you sure you want to delete this category?</b> </span>
+                                </span>
+                                <hr/>
+                                <span>
+                                    <Button onClick={this.hideDeleteCategoryPopover} className={"deleteCategoryPopoverNoButton"}>No</Button>
+                                    <Button onClick={this.deleteCategory.bind(this)} type={"danger"} className={"deleteCategoryPopoverYesButton"}>Yes </Button>
+                                </span>
+                            </div>
+                        </Popover>
+                    </div>,
+                    edit: <Button icon={"edit"}/>};
                 data.push(category);
             }
         }
@@ -198,13 +268,14 @@ class CenterBudget extends React.Component {
                 for(let i = 0; i < category.subcategories.length; i++) {
                     if (category.subcategories[i].budgets[zero] !== undefined) {
                         const id = 'c' + (record.key - 1) + 's' + i;
-                        console.log(id);
                         const m = {key: i, category: category.subcategories[i].name,
                             budget: <InputNumber defaultValue={category.subcategories[i].budgets[zero].budget}
                                 min={0} max={9999999} step={0.25} size={"small"} onBlur={this.submitBudget.bind(this)}
                                                  onFocus={this.focusElement.bind(this)} id={id}/>,
                             activity: category.subcategories[i].budgets[zero].activity,
-                            available: <Button size={"small"}>{category.subcategories[i].budgets[zero].availableAmount}</Button>};
+                            available: <Button size={"small"}>{category.subcategories[i].budgets[zero].availableAmount}</Button>,
+                            delete: <Button icon={"delete"}/>,
+                            edit: <Button icon={"edit"}/>};
                         data.push(m);
                     }
                 }
@@ -216,6 +287,13 @@ class CenterBudget extends React.Component {
                     dataSource={data}
                     pagination={false}
                     showHeader={false}
+                    onRow={(record) => {
+                        return {
+                            onClick: () => {
+
+                            }
+                        }
+                    }}
                 />
             );
         };

@@ -59,7 +59,7 @@ export function createAccount(account) {
 export function updateBudget(subcategory) {
     return request({
         url: API_BASE_URL + "/updateBudget",
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(subcategory)
     });
 }
@@ -67,8 +67,16 @@ export function updateBudget(subcategory) {
 export function updateToBeBudget(toBeBudget) {
     return request({
         url: API_BASE_URL + "/updateToBeBudget?toBeBudget=" + toBeBudget,
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(toBeBudget)
+    });
+}
+
+export function deleteCategoryRequest(category) {
+    return request({
+        url: API_BASE_URL + "/deleteCateogry",
+        method: 'DELETE',
+        body: JSON.stringify(category)
     });
 }
 

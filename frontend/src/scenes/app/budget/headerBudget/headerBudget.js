@@ -1,6 +1,7 @@
 import React from 'react';
 import './headerBudget.css'
-import {DatePicker, Button } from 'antd';
+import {DatePicker } from 'antd';
+import Button from '@material-ui/core/Button';
 import moment from 'moment';
 import {JOINING_MONTH, JOINING_YEAR} from "../../../../constants/constant";
 import {getToBeBudget} from "../../../../services/RequestAPI";
@@ -101,7 +102,7 @@ class HeaderBudget extends React.Component {
                                                      defaultValue={moment()} disabledDate={disabledDate} size={"large"}
                                         />
                                     </td>
-                                    <td><Button className={"button-header"}>{this.state.toBeBudget}</Button></td>
+                                    <td><Button variant="extendedFab" className={"button-header"}>{this.state.toBeBudget}</Button></td>
                                 </tr>
                             </tbody>
 

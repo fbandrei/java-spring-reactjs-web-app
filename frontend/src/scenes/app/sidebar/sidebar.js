@@ -13,10 +13,10 @@ class Sidebar extends React.Component {
         this.state = {
             dropdownOpen: false,
             modalAccount: false,
-            forceUpdate: false,
+            newAccountCreated: false
         };
 
-        this.reRender = this.reRender.bind(this);
+        // this.reRender = this.reRender.bind(this);
     }
 
     toggle() {
@@ -31,12 +31,21 @@ class Sidebar extends React.Component {
         })
     }
 
-    reRender(){
-        console.log(this);
-        this.render();
+    triggerRerender(){
+        console.log("rerender called");
+        this.setState({
+            newAccountCreated: true
+        })
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            newAccountCreated: false
+        })
     }
 
     render() {
+        console.log("sidebar rerendered");
         return (
             <div className={"container sidebar"}>
                 <Button className={"sidebar-buttons"} href={"/"}><i className={"fas fa-home"}/> Home</Button>
@@ -47,10 +56,10 @@ class Sidebar extends React.Component {
                     <Button className={"sidebar-buttons"} onClick={this.toggleModalAccount.bind(this)}>
                         <span><i className={"fa fa-plus"}/> Add account</span>
                     </Button>
-                    <ModalAccount reRender={this.reRender.bind(this)} toggleModalAccount={this.toggleModalAccount.bind(this)} modal={this.state.modalAccount}/>
+                    <ModalAccount triggerRerender={this.triggerRerender.bind(this)} toggleModalAccount={this.toggleModalAccount.bind(this)} modal={this.state.modalAccount}/>
                 </span>
                 <hr/>
-                    <AccountList/>
+                    <AccountList newAccountCreated={this.state.newAccountCreated}/>
                 <hr/>
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle caret className={"sidebar-buttons profile-button"}><i className={"fa fa-address-card"}/> Your

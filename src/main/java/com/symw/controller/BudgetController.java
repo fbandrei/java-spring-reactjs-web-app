@@ -26,7 +26,7 @@ public class BudgetController {
         return budgetService.getBudgetCategories(year, month);
     }
 
-    @PostMapping("/api/updateBudget")
+    @PutMapping("/api/updateBudget")
     @CrossOrigin
     @ResponseBody
     public ResponseEntity updateBudgetSubcategory(@RequestBody Subcategory subcategory) {
@@ -35,7 +35,7 @@ public class BudgetController {
         return ResponseEntity.ok(new ApiResponse(true, "Budget of subcategory updated"));
     }
 
-    @PostMapping("/api/updateToBeBudget")
+    @PutMapping("/api/updateToBeBudget")
     public ResponseEntity updateToBeBudget(@RequestParam("toBeBudget") double toBeBudget) {
 
         budgetService.updateToBeBudget(toBeBudget);

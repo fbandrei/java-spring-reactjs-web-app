@@ -31,7 +31,7 @@ export class SignupForm extends React.Component {
             password: {
                 value: '',
             }
-        }
+        };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,7 +63,7 @@ export class SignupForm extends React.Component {
             year: new Date().getFullYear(),
             month: new Date().getMonth() + 1,
             day: new Date().getUTCDate()
-        }
+        };
         signup(request)
           .then(response => {
                 notification.success({

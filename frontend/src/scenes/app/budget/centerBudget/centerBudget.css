@@ -13,6 +13,23 @@
     background-color: #1890ff;
 }
 
+.deleteCategoryPopoverNoButton {
+    margin-bottom: 10px;
+    margin-left: 95px;
+    margin-right: 20px;
+}
+
+.deleteCategoryPopoverYesButton {
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.deleteCategoryPopover {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 30px;
+}
+
 /*.ant-table-thead > tr:first-child > th:last-child {*/
     /*border-top-right-radius: 0px;*/
 /*}*/

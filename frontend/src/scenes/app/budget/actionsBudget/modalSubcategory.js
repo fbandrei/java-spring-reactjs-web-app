@@ -64,7 +64,7 @@ class ModalSubcategory extends React.Component {
             }).finally( () => {
                 if(formIsValid) {
                     this.props.toggleModalSubcategory();
-                    this.props.reRender();
+                    this.props.reRenderSubcategory();
                 }
             }
         );

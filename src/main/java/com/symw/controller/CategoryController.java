@@ -4,10 +4,7 @@ import com.symw.entity.Category;
 import com.symw.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class CategoryController {
@@ -34,5 +31,10 @@ public class CategoryController {
     public Iterable<Category> getAllCategories() {
 
         return categoryService.getAllCategories();
+    }
+
+    @DeleteMapping("/api/deleteCategory")
+    public void deleteCategory(@RequestBody Category category) {
+
     }
 }

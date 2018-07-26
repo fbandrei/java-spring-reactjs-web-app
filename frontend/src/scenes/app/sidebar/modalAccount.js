@@ -15,7 +15,7 @@ class ModalAccount extends React.Component {
             errors: {
                 name: ''
             }
-        }
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,7 +40,7 @@ class ModalAccount extends React.Component {
             }).finally( () => {
                 if(formIsValid) {
                     this.props.toggleModalAccount();
-                    this.props.reRender();
+                    this.props.triggerRerender();
                 }
             }
         );

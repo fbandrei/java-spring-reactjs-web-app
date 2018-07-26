@@ -11,7 +11,7 @@ export class AccountList extends React.Component {
 
         this.state = {
             accounts: [],
-            isLoading: true
+            isLoading: true,
         }
     }
 
@@ -23,6 +23,18 @@ export class AccountList extends React.Component {
                     isLoading: false
                 });
             })
+    }
+
+    componentWillReceiveProps(props) {
+        if (props.newAccountCreated === true) {
+            getAccounts()
+                .then(res => {
+                    this.setState({
+                        accounts: res,
+                        isLoading: false
+                    });
+                });
+        }
     }
 
     doSomething() {}

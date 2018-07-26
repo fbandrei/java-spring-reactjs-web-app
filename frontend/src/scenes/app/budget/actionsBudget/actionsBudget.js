@@ -29,7 +29,11 @@ class ActionsBudget extends React.Component {
     }
 
     reRender() {
-        this.forceUpdate();
+        this.props.setNewCategory();
+    }
+
+    reRenderSubcategory() {
+        this.props.setNewSubcategory();
     }
 
     render() {
@@ -42,7 +46,7 @@ class ActionsBudget extends React.Component {
                         </span>
                     </div>
                     <ModalCategory reRender={this.reRender.bind(this)} toggleModalCategory={this.toggleModalCategory.bind(this)} modal={this.state.modalCategory}/>
-                    <ModalSubcategory reRender={this.reRender.bind(this)} toggleModalSubcategory={this.toggleModalSubcategory.bind(this)} modal={this.state.modalSubcategory}/>
+                    <ModalSubcategory reRenderSubcategory={this.reRenderSubcategory.bind(this)} toggleModalSubcategory={this.toggleModalSubcategory.bind(this)} modal={this.state.modalSubcategory}/>
 
                 </div>
         );

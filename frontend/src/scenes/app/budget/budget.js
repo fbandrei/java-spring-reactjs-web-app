@@ -14,7 +14,9 @@ class Budget extends React.Component {
                 year: currentTime.getFullYear(),
                 month: currentTime.getMonth()
             },
-            toBeBudget: ''
+            toBeBudget: '',
+            newCategoryCreated: false,
+            newSubcategoryCreated: false
         }
     }
 
@@ -31,6 +33,18 @@ class Budget extends React.Component {
         console.log("here");
     }
 
+    setNewCategory() {
+        this.setState({
+            newCategoryCreated: true
+        })
+    }
+
+    setNewSubcategory() {
+        this.setState({
+            newSubcategoryCreated: true
+        })
+    }
+
     render() {
             console.log("rendering");
         return(
@@ -42,12 +56,12 @@ class Budget extends React.Component {
                     </div>
                     <div className={"row"}>
                         <div className={"col-12"}>
-                            <ActionsBudget/>
+                            <ActionsBudget setNewSubcategory={this.setNewSubcategory.bind(this)} setNewCategory={this.setNewCategory.bind(this)}/>
                         </div>
                     </div>
                     <div className={"row"}>
                         <div className={"col-12"}>
-                            <CenterBudget setToBeBudget={this.setToBeBudget.bind(this)} toBeBudget={this.state.toBeBudget} currentTime={this.state.currentTime}/>
+                            <CenterBudget newSubcategory={this.state.newSubcategoryCreated} newCategory={this.state.newCategoryCreated} setToBeBudget={this.setToBeBudget.bind(this)} toBeBudget={this.state.toBeBudget} currentTime={this.state.currentTime}/>
                         </div>
                     </div>
                 </div>
