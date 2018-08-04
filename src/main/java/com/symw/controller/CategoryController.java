@@ -1,8 +1,10 @@
 package com.symw.controller;
 
 import com.symw.entity.Category;
+import com.symw.payloads.ApiResponse;
 import com.symw.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +36,20 @@ public class CategoryController {
     }
 
     @DeleteMapping("/api/deleteCategory")
-    public void deleteCategory(@RequestBody Category category) {
+    @CrossOrigin
+    public ResponseEntity deleteCategory(@RequestBody Category category) {
 
+        if (categoryService.deleteCategory(category)) {
+            return ResponseEntity.ok(new ApiResponse(true, "category deleted"));
+        } else {
+            return ResponseEntity.ok(new ApiResponse(false, "something went wrong"));
+        }
     }
+
+//    @DeleteMapping("/api/deleteCategory/{categoryId}")
+//    @CrossOrigin
+//    public void deleteCategory2(@PathVariable("categoryId") long categoryId) {
+//
+//        System.out.println(categoryId);
+//    }
 }

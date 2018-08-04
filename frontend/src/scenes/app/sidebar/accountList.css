@@ -1,0 +1,9 @@
+.div-account-list:hover {
+    background-color: #C5CBE3;
+}
+
+.sum-div-account-list {
+    position: absolute;
+    right: 30px;
+    top: 12px;
+}

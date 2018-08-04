@@ -21,7 +21,7 @@ public class Budget {
     @Column(name="month")
     private short month; // 1-January .. 12-December
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference(value = "subcategoryReference")
     @JoinColumn(name = "subcategory_id", referencedColumnName = "subcategory_id")
     private Subcategory subcategory;

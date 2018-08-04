@@ -15,7 +15,7 @@ class NavigationHeader extends React.Component {
         if (!this.props.isAuthenticated) {
             navbar =
                 <Navbar color={"light"} light expand={"md"}>
-                    <NavbarBrand href="/">SYMW</NavbarBrand>
+                    <NavbarBrand href="/">SYMW - Spend your money wisely</NavbarBrand>
                     <Nav className={"ml-auto"} navbar>
                         <NavItem>
                             <NavLink href={"/login"}>Login</NavLink>
@@ -29,11 +29,8 @@ class NavigationHeader extends React.Component {
         } else {
             navbar =
                 <Navbar color={"light"} light expand={"md"}>
-                    <NavbarBrand href="/">SYMW</NavbarBrand>
+                    <NavbarBrand href="/">SYMW - Spend your money wisely</NavbarBrand>
                     <Nav className={"ml-auto"} navbar>
-                        <NavItem>
-                            <NavLink href={"/app/budget"}>App</NavLink>
-                        </NavItem>
                         <NavItem>
                             <NavLink onClick={this.props.onLogout}>Logout</NavLink>
                         </NavItem>

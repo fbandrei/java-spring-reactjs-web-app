@@ -11,10 +11,11 @@ class App extends React.Component {
                 <div>
                     <div className={"row"}>
                         <div className={"col-2"}>
-                            <Sidebar/>
+                            <Sidebar onLogout={this.props.onLogout}/>
                         </div>
                         <Switch>
                             <Route exact path={"/app/budget"} render={(props) => <Budget {...props}/>}/>
+                            <Route exact path={"/app/transactions"} render={(props) => <Budget {...props}/>}/>
                         </Switch>
                     </div>
                 </div>

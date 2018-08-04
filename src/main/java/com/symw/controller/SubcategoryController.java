@@ -1,11 +1,13 @@
 package com.symw.controller;
 
+import com.symw.entity.Category;
+import com.symw.entity.Subcategory;
+import com.symw.payloads.ApiResponse;
 import com.symw.service.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class SubcategoryController {
@@ -22,6 +24,17 @@ public class SubcategoryController {
             @RequestParam("month") int month) {
 
         return subcategoryService.addSubcategory(category_name, subcategory, year, month);
+    }
+
+    @DeleteMapping("/api/deleteSubcategory")
+    @CrossOrigin
+    public ResponseEntity deleteSubcategory(@RequestBody Subcategory subcategory) {
+
+        if (subcategoryService.deleteSubcategory(subcategory)) {
+            return ResponseEntity.ok(new ApiResponse(true, "subcategory deleted"));
+        } else {
+            return ResponseEntity.ok(new ApiResponse(false, "something went wrong"));
+        }
     }
 
 }

@@ -132,4 +132,15 @@ public class CategoryService {
 
         return budget;
     }
+
+    public boolean deleteCategory(Category category) {
+
+        try {
+            categoryRepository.delete(category);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

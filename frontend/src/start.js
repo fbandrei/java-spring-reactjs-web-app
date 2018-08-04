@@ -83,7 +83,7 @@ class Start extends React.Component {
                     <Route exact path={"/signup"} component={SignupForm}/>
                     {/*<Route exact path={"/app/budget"} component={App}/>*/}
                     <Route exact path={"/app/budget"}
-                            render={(props) => <App {...props}/>}/>
+                            render={(props) => <App onLogout={this.handleLogout}{...props}/>}/>
                     <Route path="/confirm"
                            render={(props) => <Confirm {...props} />}/>
                 </Switch>

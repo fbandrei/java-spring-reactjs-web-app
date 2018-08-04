@@ -3,7 +3,7 @@ import {ListGroup, ListGroupItem} from 'reactstrap';
 import {getAccounts} from "../../../services/RequestAPI";
 import LoadingIndicator from "../../../components/LoadingIndicator";
 import InfiniteScroll from 'react-infinite-scroller';
-import {List} from 'antd';
+import './accountList.css'
 
 export class AccountList extends React.Component {
     constructor() {
@@ -53,9 +53,9 @@ export class AccountList extends React.Component {
                         {
                             this.state.accounts.map(accounts =>
                                 <ListGroupItem tag={"a"} href={"/transactions/" + accounts.name}
-                                               key={accounts.accountNumber}>
-                                    <div><b>{accounts.name}</b></div>
-                                    <div className={"div-account-list"}><b>{accounts.sum}</b></div>
+                                               key={accounts.accountNumber} className={"div-account-list"}>
+                                    <div style={{color: "rgba(0, 0, 0, 0.65)"}}><b>{accounts.name}</b></div>
+                                    <div style={{color: "rgba(0, 0, 0, 0.65)"}} className={"sum-div-account-list"}>{accounts.sum}</div>
                                 </ListGroupItem>)
                         }
                     </ListGroup>

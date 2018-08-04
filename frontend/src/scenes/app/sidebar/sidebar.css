@@ -1,5 +1,5 @@
 .sidebar {
-    background-color: #4056A1;
+    background-color: lightslategray;
     width: 215px;
     margin-left: 0%;
     padding-left: 0px;
@@ -20,7 +20,7 @@
 
 .sidebar-buttons:hover {
     background-color: transparent;
-    color: #D79922;
+    color: #C5CBE3;
 }
 
 .sidebar-button-addAccount{
@@ -32,13 +32,7 @@
 
 .infinite-container {
     overflow: auto;
-    height: 139px;
-}
-
-.div-account-list {
-    position: absolute;
-    right:35px;
-    top:12px;
+    height: 185px;
 }
 
 .div-buttons {
@@ -47,7 +41,7 @@
 
 .profile-button {
     position: absolute;
-    top: 220px;
+    top: 110px;
 
 }
 

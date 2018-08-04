@@ -59,13 +59,13 @@ class Sidebar extends React.Component {
                     <ModalAccount triggerRerender={this.triggerRerender.bind(this)} toggleModalAccount={this.toggleModalAccount.bind(this)} modal={this.state.modalAccount}/>
                 </span>
                 <hr/>
+                    <h3 style={{color:"white", padding: "5px"}}>List of accounts</h3>
                     <AccountList newAccountCreated={this.state.newAccountCreated}/>
-                <hr/>
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle caret className={"sidebar-buttons profile-button"}><i className={"fa fa-address-card"}/> Your
                         Profile</DropdownToggle>
                     <DropdownMenu>
-                        <DropdownItem href={"http://localhost:8080/logout"}>
+                        <DropdownItem onClick={this.props.onLogout}>
                             Logout
                         </DropdownItem>
                         <DropdownItem href={"http://localhost:3000/editProfile"}>

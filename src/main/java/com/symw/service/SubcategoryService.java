@@ -67,4 +67,10 @@ public class SubcategoryService {
 
         return categoryService.createBudgets(joiningDate, currentYear, currentMonth, subcategory);
     }
+
+    public boolean deleteSubcategory(Subcategory subcategory) {
+
+        subcategoryRepository.delete(subcategory);
+        return true;
+    }
 }

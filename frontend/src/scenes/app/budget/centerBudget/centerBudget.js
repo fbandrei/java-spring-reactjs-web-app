@@ -3,7 +3,7 @@ import './centerBudget.css'
 import {Button, InputNumber, Table, message, Icon} from 'antd';
 import Popover from '@material-ui/core/Popover';
 import {
-    deleteCategoryRequest, getBudgetData, updateBudget, updateSubcategory,
+    deleteCategoryRequest, deleteSubcategoryRequest, getBudgetData, updateBudget, updateSubcategory,
     updateToBeBudget
 } from "../../../../services/RequestAPI";
 import LoadingIndicator from "../../../../components/LoadingIndicator";
@@ -22,7 +22,9 @@ class CenterBudget extends React.Component {
             currentId: '',
             currentInputValue: '',
             popoverDeleteCategory: false,
-            idForDeleteCategory: ''
+            idForDeleteCategory: '',
+            popoverDeleteSubcategory: false,
+            idForDeleteSubcategory: ''
         }
     }
 
@@ -190,22 +192,50 @@ class CenterBudget extends React.Component {
         });
     };
 
+    hideDeleteSubcategoryPopover = () => {
+        this.setState({
+            popoverDeleteSubcategory: false
+        });
+    };
+
     deleteCategory() {
         const categoryIndex = this.state.idForDeleteCategory;
         const category = this.state.data[categoryIndex];
         deleteCategoryRequest(category)
             .then(res => {
-                this.setState({
-                    data: res
-                });
                 message.success("Category successfully deleted");
-            })
+                this.fetchData();
+            });
+        this.setState({
+            popoverDeleteCategory: false
+        })
     }
 
-    handleVisibleChange = (popoverDeleteCategory) => {
+    deleteSubcategory() {
+        const id = this.state.idForDeleteSubcategory;
+        console.log(id);
+        const subcategory = this.state.data[id[0]].subcategories[id[2]];
+        deleteSubcategoryRequest(subcategory)
+            .then(res => {
+                message.success("Subcategory successfully deleted");
+                this.fetchData();
+            });
+        this.setState({
+            popoverDeleteSubcategory: false
+        });
+    }
+
+    handleVisibleChangeCategory = (popoverDeleteCategory) => {
         this.setState({ popoverDeleteCategory });
         this.setState({
             idForDeleteCategory: document.activeElement.id
+        })
+    };
+
+    handleVisibleChangeSubcategory = (popoverDeleteSubcategory) => {
+        this.setState({ popoverDeleteSubcategory });
+        this.setState({
+            idForDeleteSubcategory: document.activeElement.id
         })
     };
 
@@ -229,7 +259,7 @@ class CenterBudget extends React.Component {
                     budget: this.state.budget[i].budgeted, activity: this.state.budget[i].activity,
                     available: this.state.budget[i].available,
                     delete: <div>
-                        <Button icon={"delete"} type={"danger"} onClick={this.handleVisibleChange} id={i + ''}/>
+                        <Button icon={"delete"} type={"danger"} onClick={this.handleVisibleChangeCategory} id={i + ''}/>
                         <Popover id={'' + i}
                             open={Boolean(this.state.popoverDeleteCategory)}
                             onClose={this.hideDeleteCategoryPopover}
@@ -268,13 +298,40 @@ class CenterBudget extends React.Component {
                 for(let i = 0; i < category.subcategories.length; i++) {
                     if (category.subcategories[i].budgets[zero] !== undefined) {
                         const id = 'c' + (record.key - 1) + 's' + i;
+                        const id2 = (record.key - 1) + 's' + i;
                         const m = {key: i, category: category.subcategories[i].name,
                             budget: <InputNumber defaultValue={category.subcategories[i].budgets[zero].budget}
                                 min={0} max={9999999} step={0.25} size={"small"} onBlur={this.submitBudget.bind(this)}
                                                  onFocus={this.focusElement.bind(this)} id={id}/>,
                             activity: category.subcategories[i].budgets[zero].activity,
                             available: <Button size={"small"}>{category.subcategories[i].budgets[zero].availableAmount}</Button>,
-                            delete: <Button icon={"delete"}/>,
+                            delete: <div>
+                                <Button icon={"delete"} type={"danger"} onClick={this.handleVisibleChangeSubcategory} id={id2}/>
+                                <Popover id={'' + i}
+                                         open={Boolean(this.state.popoverDeleteSubcategory)}
+                                         onClose={this.hideDeleteSubcategoryPopover}
+                                         anchorOrigin={{
+                                             vertical: 'top',
+                                             horizontal: 'center',
+                                         }}
+                                         transformOrigin={{
+                                             vertical: 'top',
+                                             horizontal: 'center',
+                                         }}
+                                >
+                                    <div>
+                                <span className={"deleteCategoryPopover"}>
+                                    <Icon type={"exclamation-circle"}/>
+                                    <span> <b>Are you sure you want to delete this subcategory?</b> </span>
+                                </span>
+                                        <hr/>
+                                        <span>
+                                    <Button onClick={this.hideDeleteSubcategoryPopover} className={"deleteCategoryPopoverNoButton"}>No</Button>
+                                    <Button onClick={this.deleteSubcategory.bind(this)} type={"danger"} className={"deleteCategoryPopoverYesButton"}>Yes </Button>
+                                </span>
+                                    </div>
+                                </Popover>
+                            </div>,
                             edit: <Button icon={"edit"}/>};
                         data.push(m);
                     }

@@ -74,9 +74,17 @@ export function updateToBeBudget(toBeBudget) {
 
 export function deleteCategoryRequest(category) {
     return request({
-        url: API_BASE_URL + "/deleteCateogry",
+        url: API_BASE_URL + "/deleteCategory",
         method: 'DELETE',
         body: JSON.stringify(category)
+    });
+}
+
+export function deleteSubcategoryRequest(subcategory) {
+    return request({
+        url: API_BASE_URL + "/deleteSubcategory",
+        method: 'DELETE',
+        body: JSON.stringify(subcategory)
     });
 }
 
