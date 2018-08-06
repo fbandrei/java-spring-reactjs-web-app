@@ -3,6 +3,7 @@ import Sidebar from './sidebar/sidebar.js'
 import './App.css'
 import {Route, Switch} from "react-router-dom";
 import Budget from "./budget/budget";
+import Transactions from "./transactions/transactions";
 
 class App extends React.Component {
     render() {
@@ -15,7 +16,7 @@ class App extends React.Component {
                         </div>
                         <Switch>
                             <Route exact path={"/app/budget"} render={(props) => <Budget {...props}/>}/>
-                            <Route exact path={"/app/transactions"} render={(props) => <Budget {...props}/>}/>
+                            <Route exact path={"/app/transactions"} render={(props) => <Transactions {...props}/>}/>
                         </Switch>
                     </div>
                 </div>

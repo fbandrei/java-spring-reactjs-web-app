@@ -20,7 +20,7 @@ class Start extends React.Component {
             currentUser: null,
             isAuthenticated: false,
             isLoading: false
-        }
+        };
 
         this.handleLogout = this.handleLogout.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -84,6 +84,8 @@ class Start extends React.Component {
                     {/*<Route exact path={"/app/budget"} component={App}/>*/}
                     <Route exact path={"/app/budget"}
                             render={(props) => <App onLogout={this.handleLogout}{...props}/>}/>
+                    <Route exact path={"/app/transactions"}
+                           render={(props) => <App onLogout={this.handleLogout}{...props}/>}/>
                     <Route path="/confirm"
                            render={(props) => <Confirm {...props} />}/>
                 </Switch>
