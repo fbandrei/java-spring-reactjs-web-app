@@ -34,7 +34,8 @@ public class SubcategoryService {
     public Boolean addSubcategory(String selectedCategory, String subcategory,
                                   int year, int month) {
 
-        Optional<Category> oCategory = categoryRepository.findByName(selectedCategory);
+        User user = userService.getAuthenticatedUser();
+        Optional<Category> oCategory = categoryRepository.findByNameAndUserId(selectedCategory, user.getId());
         if (oCategory.isPresent()) {
             Set<Subcategory> subcategories = subcategoryRepository.findAllByCategory(oCategory.get());
             for(Subcategory s: subcategories) {

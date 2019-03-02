@@ -1,8 +1,8 @@
-export const API_BASE_URL = 'http://localhost:8080/api';
-export const ACCESS_TOKEN = 'accessToken';
-export const JOINING_YEAR = 'joiningYear';
-export const JOINING_MONTH = 'joiningMonth';
-export const JOINING_DAY = 'joiningDay';
+export const API_BASE_URL = "http://localhost:8080/api";
+export const ACCESS_TOKEN = "accessToken";
+export const JOINING_YEAR = "joiningYear";
+export const JOINING_MONTH = "joiningMonth";
+export const JOINING_DAY = "joiningDay";
 export const NAME_MIN_LENGTH = 2;
 export const NAME_MAX_LENGTH = 40;
 export const EMAIL_MAX_LENGTH = 40;

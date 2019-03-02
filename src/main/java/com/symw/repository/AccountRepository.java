@@ -12,4 +12,7 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 	
 	Optional<Account> findByName(String name);
 	Iterable<Account> findAllByUserId(Long UserId);
+	Optional<Account> findByNameAndUserId(String name, Long id);
+
+	Account findByAccountNumber(Long accountNumber);
 }

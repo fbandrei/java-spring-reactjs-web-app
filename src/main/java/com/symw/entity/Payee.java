@@ -1,5 +1,7 @@
 package com.symw.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,13 +20,14 @@ public class Payee {
 	
 	@Column(name = "description")
 	private String description;
-	
+
+	@JsonBackReference(value = "payeeReference")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="transactionId", fetch = FetchType.LAZY)
-	@Column
+	@OneToMany(mappedBy="payee", fetch = FetchType.LAZY)
+	@JsonBackReference(value = "transactionsReference")
 	private Set<Transaction> transactions =new HashSet<>();
 
 	public int getPayeeId() {

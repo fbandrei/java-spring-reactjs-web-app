@@ -31,8 +31,8 @@ public class BudgetService {
     private GlobalRepository globalRepository;
 
     public Set<Category> getBudgetCategories(short year, short month) {
-
-        Iterable<Category> allCategories = categoryRepository.findAll();
+        User user = userService.getAuthenticatedUser();
+        Iterable<Category> allCategories = categoryRepository.findAllByUserId(user.getId());
         Set<Category> categories = new HashSet<>();
         for(Category c : allCategories) {
             Set<Subcategory> subcategories = c.getSubcategories();

@@ -37,16 +37,16 @@ public class AccountService {
 	public Iterable<Account> getAllAccounts() {
 		User user = userService.getAuthenticatedUser();
 		LOGGER.info("User: " + user.getId());
-		return accountRepository.findAll();
+		return accountRepository.findAllByUserId(user.getId());
 	}
 
 	public boolean createAccount(Account a) {
-		Optional<Account> account = accountRepository.findByName(a.getName());
+		User user = userService.getAuthenticatedUser();
+		Optional<Account> account = accountRepository.findByNameAndUserId(a.getName(), user.getId());
 		if (account.isPresent()) {
 			return false;
 		} else {
 			a.setDescription("");
-			User user = userService.getAuthenticatedUser();
 			LOGGER.info("User: " + user.getId());
 			a.setUser(userRepository.findById(user.getId()).get());
 			accountRepository.save(a);

@@ -64,7 +64,7 @@ public class UserService {
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		user.setConfirmationToken(confirmationToken);
 		user.setEnabled(false);
-		Role userRole = roleRepository.findByName("USER").
+		Role userRole = roleRepository.findByName("ROLE_USER").
 				orElseThrow(() -> new AppException("User role not set."));
 		user.setRoles(Collections.singleton(userRole));
 		LOGGER.info("Year: " + request.getYear() + " Month: " + request.getMonth() + " Day: " + request.getDay());

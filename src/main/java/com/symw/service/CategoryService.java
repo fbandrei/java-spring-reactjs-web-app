@@ -29,9 +29,8 @@ public class CategoryService {
 
     public Iterable<Category> getAllCategories() {
 
-        LOGGER.info("Before getting all categories.");
-        Iterable<Category> categories = categoryRepository.findAll();
-        LOGGER.info("After getting all categories.");
+        User authenticatedUser = userService.getAuthenticatedUser();
+        Iterable<Category> categories = categoryRepository.findAllByUserId(authenticatedUser.getId());
         return categories;
     }
 
@@ -40,15 +39,14 @@ public class CategoryService {
                             int year, int month) {
 
         Boolean response = true;
-
-        Optional<Category> optionalCategory = categoryRepository.findByName(categoryName);
+        User authenticatedUser = userService.getAuthenticatedUser();
+        Optional<Category> optionalCategory = categoryRepository.findByNameAndUserId(categoryName, authenticatedUser.getId());
         if (optionalCategory.isPresent()) {
             response = false;
         } else {
             Category category = new Category();
             category.setName(categoryName);
             category.setUser(userService.getAuthenticatedUser());
-            User authenticatedUser = userService.getAuthenticatedUser();
             User user = userRepository.findById(authenticatedUser.getId()).get();
             category.setUser(user);
             Set<Subcategory> subcategories = new HashSet<>();

@@ -29,7 +29,7 @@ public class Account {
 	private User user;
 	
 	@OneToMany(mappedBy="account", fetch = FetchType.LAZY)
-	@Column
+	@JsonBackReference(value = "transactionsReference")
 	private Set<Transaction> transactions;
 
 	public Long getAccountNumber() {
