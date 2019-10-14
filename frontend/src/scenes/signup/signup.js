@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 const FormItem = Form.Item;
 
-export class SignupForm extends React.Component {
+export class SignUpForm extends React.Component {
   constructor() {
     super();
 
@@ -64,7 +64,7 @@ export class SignupForm extends React.Component {
       day: new Date().getUTCDate()
     };
     signUp(request)
-      .then(response => {
+      .then(() => {
         notification.success({
           message: "SYMW",
           description:
@@ -213,7 +213,7 @@ export class SignupForm extends React.Component {
   render() {
     return (
       <div className="signup-container">
-        <h1 className="page-title">Sign Up</h1>
+        <h1 className="page-title">Sign up or <Link to="/">Go Home</Link></h1>
         <div className="signup-content">
           <Form onSubmit={this.handleSubmit} className="signup-form">
             <FormItem

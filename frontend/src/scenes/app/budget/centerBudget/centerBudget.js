@@ -65,9 +65,9 @@ class CenterBudget extends React.Component {
     const month = currentTime.month + 1;
     getBudgetData(year, month).then(res => {
       this.setState({
-        data: res
+        dataFromServer: res
       });
-      let categories = this.state.data;
+      let categories = this.state.dataFromServer;
       let budget = [];
       const zero = 0;
       if (categories !== undefined) {
@@ -105,9 +105,8 @@ class CenterBudget extends React.Component {
   submitBudget() {
     const input = document.getElementById(this.state.currentId);
     const id = this.state.currentId;
-    const data = this.state.data;
+    const data = this.state.dataFromServer;
     if (input.value !== this.state.currentInputValue) {
-      console.log(id);
       let subcategory = [];
       if (id[2] === "s") {
         if (id[4] !== undefined) {
@@ -134,7 +133,7 @@ class CenterBudget extends React.Component {
           subcategory.budgets[0] = budget;
           updateBudget(subcategory).then(
             this.setState({
-              data: data
+              dataFromServer: data
             })
           );
         } else {
@@ -161,7 +160,7 @@ class CenterBudget extends React.Component {
           subcategory.budgets[0] = budget;
           updateBudget(subcategory).then(
             this.setState({
-              data: data
+              dataFromServer: data
             })
           );
         }
@@ -191,7 +190,7 @@ class CenterBudget extends React.Component {
           subcategory.budgets[0] = budget;
           updateBudget(subcategory).then(
             this.setState({
-              data: data
+              dataFromServer: data
             })
           );
         } else {
@@ -218,7 +217,7 @@ class CenterBudget extends React.Component {
           subcategory.budgets[0] = budget;
           updateBudget(subcategory).then(
             this.setState({
-              data: data
+              dataFromServer: data
             })
           );
         }
@@ -248,7 +247,7 @@ class CenterBudget extends React.Component {
 
   deleteCategory() {
     const categoryIndex = this.state.idForDeleteCategory;
-    const category = this.state.data[categoryIndex];
+    const category = this.state.dataFromServer[categoryIndex];
     deleteCategoryRequest(category).then(res => {
       message.success("Category successfully deleted");
       this.fetchData();
@@ -260,8 +259,7 @@ class CenterBudget extends React.Component {
 
   deleteSubcategory() {
     const id = this.state.idForDeleteSubcategory;
-    console.log(id);
-    const subcategory = this.state.data[id[0]].subcategories[id[2]];
+    const subcategory = this.state.dataFromServer[id[0]].subcategories[id[2]];
     deleteSubcategoryRequest(subcategory).then(res => {
       message.success("Subcategory successfully deleted");
       this.fetchData();
@@ -302,7 +300,7 @@ class CenterBudget extends React.Component {
       { title: "Delete", dataIndex: "delete", key: "delete", width: 60 },
       { title: "Edit", dataIndex: "edit", key: "edit", width: 150 }
     ];
-    const arrayData = this.state.data;
+    const arrayData = this.state.dataFromServer;
     const data = [];
     if (arrayData !== undefined) {
       for (let i = 0; i < arrayData.length; i++) {
@@ -365,10 +363,11 @@ class CenterBudget extends React.Component {
         };
         data.push(category);
       }
+      console.log(data);
     }
 
     const expandedRowRender = record => {
-      const category = this.state.data[record.key - 1];
+      const category = this.state.dataFromServer[record.key - 1];
       const zero = 0;
       const data = [];
       if (category !== undefined && category.subcategories !== undefined) {

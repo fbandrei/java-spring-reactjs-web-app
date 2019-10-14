@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Layout } from "antd";
 import NavigationHeader from "../../components/navbar/navbar";
-import homeBackground from "../../images/homeBackground.jpg";
 import mountainsTrees from "../../images/mountains_trees.jpg";
 import Button from "@material-ui/core/Button";
 import "./home.css";

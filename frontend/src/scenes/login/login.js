@@ -18,7 +18,7 @@ class Login extends Component {
     const WrappedLoginForm = Form.create()(LoginForm);
     return (
       <div className="login-container">
-        <h1 className="page-title">Login</h1>
+        <h1 className="page-title">Login or <Link to="/">Go Home</Link> </h1>
         <div className="login-content">
           <WrappedLoginForm onLogin={this.props.onLogin} />
         </div>
@@ -120,7 +120,7 @@ class LoginForm extends Component {
           >
             Login
           </Button>
-          Or <Link to="/signup">register now!</Link>
+          Don't you have an account yet? <Link to="/signup">register now!</Link>
         </FormItem>
       </Form>
     );

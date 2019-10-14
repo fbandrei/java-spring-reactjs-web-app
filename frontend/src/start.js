@@ -5,7 +5,7 @@ import { getCurrentUser } from "./services/RequestAPI";
 import { ACCESS_TOKEN } from "./constants/constant";
 import LoadingIndicator from "./components/LoadingIndicator";
 import { Route, Switch, withRouter } from "react-router-dom";
-import { SignupForm } from "./scenes/signup/signup";
+import { SignUpForm } from "./scenes/signup/signup";
 import Login from "./scenes/login/login";
 import Home from "./scenes/home/home";
 import App from "./scenes/app/App";
@@ -91,7 +91,7 @@ class Start extends React.Component {
           path="/login"
           render={props => <Login onLogin={this.handleLogin} {...props} />}
         />
-        <Route exact path={"/signup"} component={SignupForm} />
+        <Route exact path={"/signup"} component={SignUpForm} />
         {/*<Route exact path={"/app/budget"} component={App}/>*/}
         <Route
           exact

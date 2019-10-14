@@ -33,7 +33,7 @@
 		
 		$.ajax({
 			url: 'http://localhost:8181/addUser',
-			data : {username : username, password : password, firstname : firstname, lastname : lastname},
+			dataFromServer : {username : username, password : password, firstname : firstname, lastname : lastname},
 			success : function(data) {
 				console.log(data);
 			}

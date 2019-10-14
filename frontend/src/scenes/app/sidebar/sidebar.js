@@ -19,8 +19,6 @@ class Sidebar extends React.Component {
       modalAccount: false,
       newAccountCreated: false
     };
-
-    // this.reRender = this.reRender.bind(this);
   }
 
   toggle() {
@@ -62,7 +60,14 @@ class Sidebar extends React.Component {
           <Button className={"sidebar-buttons"} href={"/app/transactions"}>
             <i className={"fas fa-money-check-alt"} /> Transactions
           </Button>
-          {/*<Button className={"sidebar-buttons"} href={"/analytics"}><i className="fas fa-chart-area"/> Analytics</Button>*/}
+          <Button className={"sidebar-buttons"} href={"/analytics"}>
+            <i className="fas fa-chart-area" /> Analytics
+          </Button>
+        </span>
+        <hr />
+        <h3 style={{ color: "white", padding: "5px" }}>List of accounts</h3>
+        <AccountList newAccountCreated={this.state.newAccountCreated} />
+        <div>
           <Button
             className={"sidebar-buttons"}
             onClick={this.toggleModalAccount.bind(this)}
@@ -76,10 +81,7 @@ class Sidebar extends React.Component {
             toggleModalAccount={this.toggleModalAccount.bind(this)}
             modal={this.state.modalAccount}
           />
-        </span>
-        <hr />
-        <h3 style={{ color: "white", padding: "5px" }}>List of accounts</h3>
-        <AccountList newAccountCreated={this.state.newAccountCreated} />
+        </div>
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
           <DropdownToggle caret className={"sidebar-buttons profile-button"}>
             <i className={"fa fa-address-card"} /> Your Profile
