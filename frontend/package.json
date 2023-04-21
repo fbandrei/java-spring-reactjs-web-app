@@ -7,7 +7,7 @@
     "@material-ui/icons": "^2.0.1",
     "antd": "^3.6.2",
     "axios": "^0.18.0",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.3.1",
     "es6-docready": "^1.0.0",
     "es6-dom": "^1.1.0",
     "mdbreact": "^4.4.0",
